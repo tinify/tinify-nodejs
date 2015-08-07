@@ -26,12 +26,13 @@
   },
   "main": "lib/tinify.js",
   "dependencies": {
-    "bluebird": "^2.9.34"
+    "bluebird": "^2.9.34",
+    "detect-engine": "^1.0.2"
   },
   "devDependencies": {
     "mocha": "^2.2.5",
-    "chai": "^3.0.0",
-    "nock": "^2.7.0",
+    "chai": "^2.3.0",
+    "nock": "^2.10.0",
     "tmp": "^0.0.26"
   }
 }
