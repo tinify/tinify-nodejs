@@ -30,6 +30,23 @@ describe("tinify", function() {
     })
   })
 
+  describe("appIdentifier", function() {
+    beforeEach(function() {
+      var request = nock("https://api.tinify.com", {
+        reqheaders: {"user-agent": tinify.Client.prototype.USER_AGENT + " MyApp/2.0"}
+      }).get("/")
+        .reply(200)
+    })
+
+    it("should reset client with new app identifier", function() {
+      tinify.key = "abcde"
+      tinify.appIdentifier = "MyApp/1.0"
+      tinify.client
+      tinify.appIdentifier = "MyApp/2.0"
+      return tinify.client.request("get", "/")
+    })
+  })
+
   describe("client", function() {
     describe("with key", function() {
       it("should return client", function() {
