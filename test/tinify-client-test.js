@@ -29,7 +29,10 @@ describe("Client", function() {
 
       it("should issue request with json body", function() {
         var request = nock("https://api.tinify.com", {
-          reqheaders: {"content-type": "application/json"}
+          reqheaders: {
+            "content-type": "application/json",
+            "content-length": 17,
+          }
         }).get("/", {hello: "world"})
           .reply(200, {})
 
