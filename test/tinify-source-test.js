@@ -106,12 +106,12 @@ describe("Source", function() {
     })
 
     describe("store", function() {
-      it("should return result metadata", function() {
+      it("should return result meta", function() {
         var result = tinify.Source.fromBuffer("png file").store({service: "s3"})
         assert.instanceOf(result, tinify.ResultMeta)
       })
 
-      it("should return result metadata with location", function() {
+      it("should return result meta with location", function() {
         var location = tinify.Source.fromBuffer("png file").store({service: "s3"}).location()
         return location.then(function(location) {
           assert.equal("https://bucket.s3.amazonaws.com/example", location)
