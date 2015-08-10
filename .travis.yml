@@ -18,3 +18,4 @@ deploy:
   on:
     tags: true
     repo: tinify/tinify-nodejs
+    node: "0.12"
