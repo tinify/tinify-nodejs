@@ -2,6 +2,12 @@
 
 # Tinify API client for Node.js
 
+Node.js client for the Tinify API. Tinify compresses your images intelligently. Read more at https://tinify.com.
+
+## Documentation
+
+[Go to the documentation for the Node.js client](https://tinypng.com/developers/reference/nodejs).
+
 ## Installation
 
 Install the API client:
