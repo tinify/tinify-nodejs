@@ -32,7 +32,7 @@ Or add this to your `package.json`:
 var tinify = require("tinify");
 tinify.key = "YOUR_API_KEY";
 
-tinify.fromFile("unoptimized.png").toFile("optimized.png",);
+tinify.fromFile("unoptimized.png").toFile("optimized.png");
 ```
 
 ## Running tests
