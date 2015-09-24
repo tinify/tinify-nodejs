@@ -19,7 +19,8 @@
   },
   "bugs:": "https://github.com/tinify/tinify-nodejs/issues",
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha --reporter dot"
+    "test": "node_modules/mocha/bin/mocha --reporter dot",
+    "integration": "node_modules/mocha/bin/mocha --reporter dot test/integration.js"
   },
   "engines": {
     "node": ">= v0.10.0"
