@@ -14,6 +14,7 @@ env:
 matrix:
   include:
   - node_js: '4.1'
+    env: INTEGRATION_TESTS=true
     script: npm run integration
 notifications:
   email: false
@@ -28,3 +29,4 @@ deploy:
     tags: true
     repo: tinify/tinify-nodejs
     node: '4.1'
+    condition: "$INTEGRATION_TESTS != true"
