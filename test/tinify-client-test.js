@@ -74,6 +74,16 @@ describe("Client", function() {
       })
     })
 
+    describe("with empty object", function() {
+      it("should issue request without body", function() {
+        var request = nock("https://api.tinify.com")
+          .get("/", "")
+          .reply(200, {})
+
+        return this.subject.request("get", "/")
+      })
+    })
+
     /* TODO: Test timeout/socket errors? */
 
     describe("with unexpected error", function() {
