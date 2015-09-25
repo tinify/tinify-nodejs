@@ -25,6 +25,7 @@ describe("client integration", function() {
   it("should compress", function() {
     var file = tmp.fileSync()
     return optimized.toFile(file.name).then(function() {
+      assert.isAbove(fs.statSync(file.name).size, 0)
       assert.isBelow(fs.statSync(file.name).size, 1500)
     })
   })
@@ -32,6 +33,7 @@ describe("client integration", function() {
   it("should resize", function() {
     var file = tmp.fileSync()
     return optimized.resize({ method: "fit", width: 50, height: 20 }).toFile(file.name).then(function() {
+      assert.isAbove(fs.statSync(file.name).size, 0)
       assert.isBelow(fs.statSync(file.name).size, 800)
     })
   })
