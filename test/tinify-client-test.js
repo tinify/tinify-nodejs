@@ -27,6 +27,15 @@ describe("Client", function() {
         return this.subject.request("get", "/", {})
       })
 
+      it("should issue request without content type when options are empty", function() {
+        var request = nock("https://api.tinify.com", {
+          badheaders: ["content-type"]
+        }).get("/", "")
+          .reply(200, {})
+
+        return this.subject.request("get", "/", {})
+      })
+
       it("should issue request with json body", function() {
         var request = nock("https://api.tinify.com", {
           reqheaders: {
