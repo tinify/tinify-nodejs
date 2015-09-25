@@ -2,19 +2,20 @@
 
 if (process.env.TRAVIS_PULL_REQUEST && process.env.TRAVIS_PULL_REQUEST !== "false") process.exit()
 
+if (!process.env.TINIFY_KEY) {
+  console.log("Set the TINIFY_KEY environment variable.")
+  process.exit(1)
+}
+
 var tinify = require("../lib/tinify")
 var assert = require("chai").assert
 var tmp = require("tmp")
 var fs = require("fs")
 
-describe("client", function() {
+describe("client integration", function() {
   var optimized
 
   before(function() {
-    if (!process.env.TINIFY_KEY) {
-      console.log("Set the TINIFY_KEY environment variable.")
-      process.exit(1)
-    }
     tinify.key = process.env.TINIFY_KEY
 
     var unoptimizedPath = __dirname + "/examples/voormedia.png"
