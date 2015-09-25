@@ -42,6 +42,13 @@ npm install
 npm test
 ```
 
+### Integration tests
+
+```
+npm install
+TINIFY_KEY=$YOUR_API_KEY npm run integration
+```
+
 ## License
 
 This software is licensed under the MIT License. [View the license](LICENSE).
