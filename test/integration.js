@@ -1,7 +1,5 @@
 "use strict"
 
-if (process.env.TRAVIS_PULL_REQUEST && process.env.TRAVIS_PULL_REQUEST !== "false") process.exit()
-
 if (!process.env.TINIFY_KEY) {
   console.log("Set the TINIFY_KEY environment variable.")
   process.exit(1)
