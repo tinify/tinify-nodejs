@@ -1,13 +1,16 @@
 language: node_js
 node_js:
-- '0.10'
-- '0.11'
-- '0.12'
-- '4.0'
-- '4.1'
-- iojs-v1
-- iojs-v2
-- iojs
+- 0.10
+- 0.11
+- 0.12
+- 4.0
+- 4.1
+- 4.2
+- 5.0
+- 5.1
+- 5.2
+- 5.3
+- 5.4
 env:
   global:
     secure: cvcjiYODG4Wi9J7/I+54UfUp6Wbvpv83a3sQgeMCM35Wg/9DQrwx8JIp07FTyrqeIAENkDcfFeDOLbFhF94kciwfEsAkymFN2f+yOBtUg+ev61kXZPo06eepazcB6fdxdh06KeCTncgZhSqeMNjodLHcSxoe7cS56xVcNeGuWFRheiUeJq9a7w5uVYxUbzQO/9D0OKJC6qhf7/ZnStvU6Vhqk85NoMG8h10H+b0ecOX+yHvPiJU+/rjTDPHnqVxDFBdZIADiN9sLE6qXAd2RX9xI1h1XKWdslKoxZO2s0O3O19MmGq+hWCpBXeZj4HZQEnvxjbQ5hknZv+lqGCDUS0l7SKrGRoWdg6E+tSkQA7oHNubTbjeahflx1wY2XEH95NfQ/RLoAs8pzQ4mg6ZgwustLXFJv+sGTC4OQC8gsQdwLuHVLCu8+qsYnQGprAMdeu0Ct7rVc1upMuOJyt4jLsoryGugOXi/DUvr1JngFrSaHdc5vNiXn8E7vE+t/Ek8a8YA8FEkZSUmwJqgJhO5BBBQ2PdGrtS2JqResAcLysTVe+yvA61IJNaDDJ8ta7aXdqZPkTHCeIkIgemvWCsmyVerRKv1M6cJCcnOsxk0qnY6F323v6kh33DOsuxZOnaCWTJa9QOa2mQbud32GrIZiOd2DKLH7XP1mSqW88IQcVk=
