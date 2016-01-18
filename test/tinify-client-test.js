@@ -40,7 +40,7 @@ describe("Client", function() {
         var request = nock("https://api.tinify.com", {
           reqheaders: {
             "content-type": "application/json",
-            "content-length": 17,
+            "content-length": "17",
           }
         }).get("/", {hello: "world"})
           .reply(200, {})
