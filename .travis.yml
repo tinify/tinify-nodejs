@@ -18,7 +18,7 @@ matrix:
   include:
   - node_js: '4.1'
     env: INTEGRATION_TESTS=true
-    script: "[ \"$TRAVIS_PULL_REQUEST\" == \"false\" ] && npm run integration"
+    script: "if [ \"$TRAVIS_PULL_REQUEST\" == \"false\" ]; then npm run integration; fi"
 notifications:
   email: false
   slack:
