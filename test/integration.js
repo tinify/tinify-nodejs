@@ -11,6 +11,8 @@ var tmp = require("tmp")
 var fs = require("fs")
 
 describe("client integration", function() {
+  this.timeout(5000)
+
   var optimized
 
   before(function() {
