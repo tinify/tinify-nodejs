@@ -33,36 +33,38 @@ describe("Source", function() {
         })
       })
     })
+
+    describe("fromUrl", function() {
+      it("should pass account error", function() {
+        return tinify.Source.fromUrl("http://example.com/test.jpg").toBuffer().catch(function(err) {
+          assert.instanceOf(err, tinify.AccountError)
+        })
+      })
+    })
   })
 
   describe("with valid api key", function() {
-    beforeEach(function() {
+    before(function() {
       tinify.key = "valid"
-
-      var request1 = nock("https://api.tinify.com")
-        .post("/shrink")
-        .reply(201, {}, {location: "https://api.tinify.com/some/location"})
-
-      var request2 = nock("https://api.tinify.com")
-        .get("/some/location")
-        .reply(200, "compressed file")
-
-      var request3 = nock("https://api.tinify.com")
-        .get("/some/location", '{"resize":{"width":400}}')
-        .reply(200, "small file")
-
-      var request4 = nock("https://api.tinify.com")
-        .post("/some/location", '{"store":{"service":"s3"}}')
-        .reply(200, {}, {location: "https://bucket.s3.amazonaws.com/example"})
     })
 
     describe("fromFile", function() {
+      beforeEach(function() {
+        nock("https://api.tinify.com")
+          .post("/shrink")
+          .reply(201, {}, {location: "https://api.tinify.com/some/location"})
+      })
+
       it("should return source", function() {
         var source = tinify.Source.fromFile(dummyFile)
         assert.instanceOf(source, tinify.Source)
       })
 
       it("should return source with data", function() {
+        nock("https://api.tinify.com")
+          .get("/some/location")
+          .reply(200, "compressed file")
+
         var data = tinify.Source.fromFile(dummyFile).toBuffer()
         return data.then(function(data) {
           assert.equal("compressed file", data)
@@ -71,12 +73,22 @@ describe("Source", function() {
     })
 
     describe("fromBuffer", function() {
+      beforeEach(function() {
+        nock("https://api.tinify.com")
+          .post("/shrink")
+          .reply(201, {}, {location: "https://api.tinify.com/some/location"})
+      })
+
       it("should return source", function() {
         var source = tinify.Source.fromBuffer("png file")
         assert.instanceOf(source, tinify.Source)
       })
 
       it("should return source with data", function() {
+        nock("https://api.tinify.com")
+          .get("/some/location")
+          .reply(200, "compressed file")
+
         var data = tinify.Source.fromBuffer("png file").toBuffer()
         return data.then(function(data) {
           assert.equal("compressed file", data)
@@ -84,7 +96,53 @@ describe("Source", function() {
       })
     })
 
+    describe("fromUrl", function() {
+      it("should return source", function() {
+        nock("https://api.tinify.com")
+          .post("/shrink", '{"source":{"url":"http://example.com/test.jpg"}}')
+          .reply(201, {}, {location: "https://api.tinify.com/some/location"})
+
+        var source = tinify.Source.fromUrl("http://example.com/test.jpg")
+        assert.instanceOf(source, tinify.Source)
+      })
+
+      it("should return source with data", function() {
+        nock("https://api.tinify.com")
+          .post("/shrink", '{"source":{"url":"http://example.com/test.jpg"}}')
+          .reply(201, {}, {location: "https://api.tinify.com/some/location"})
+
+        nock("https://api.tinify.com")
+          .get("/some/location")
+          .reply(200, "compressed file")
+
+        var data = tinify.Source.fromUrl("http://example.com/test.jpg").toBuffer()
+        return data.then(function(data) {
+          assert.equal("compressed file", data)
+        })
+      })
+
+      it("should pass error if request is not ok", function() {
+        nock("https://api.tinify.com")
+          .post("/shrink", '{"source":{"url":"file://wrong"}}')
+          .reply(400, '{"error":"Source not found","message":"Cannot parse URL"}')
+
+        return tinify.Source.fromUrl("file://wrong").toBuffer().catch(function(err) {
+          assert.instanceOf(err, tinify.ClientError)
+        })
+      })
+    })
+
     describe("result", function() {
+      beforeEach(function() {
+        nock("https://api.tinify.com")
+          .post("/shrink")
+          .reply(201, {}, {location: "https://api.tinify.com/some/location"})
+
+        nock("https://api.tinify.com")
+          .get("/some/location")
+          .reply(200, "compressed file")
+      })
+
       it("should return result", function() {
         var result = tinify.Source.fromBuffer("png file").result()
         assert.instanceOf(result, tinify.Result)
@@ -92,6 +150,16 @@ describe("Source", function() {
     })
 
     describe("resize", function() {
+      beforeEach(function() {
+        nock("https://api.tinify.com")
+          .post("/shrink")
+          .reply(201, {}, {location: "https://api.tinify.com/some/location"})
+
+        nock("https://api.tinify.com")
+          .get("/some/location", '{"resize":{"width":400}}')
+          .reply(200, "small file")
+      })
+
       it("should return source", function() {
         var source = tinify.Source.fromBuffer("png file").resize({width: 400})
         assert.instanceOf(source, tinify.Source)
@@ -106,6 +174,16 @@ describe("Source", function() {
     })
 
     describe("store", function() {
+      beforeEach(function() {
+        nock("https://api.tinify.com")
+          .post("/shrink")
+          .reply(201, {}, {location: "https://api.tinify.com/some/location"})
+
+        nock("https://api.tinify.com")
+          .post("/some/location", '{"store":{"service":"s3"}}')
+          .reply(200, {}, {location: "https://bucket.s3.amazonaws.com/example"})
+      })
+
       it("should return result meta", function() {
         var result = tinify.Source.fromBuffer("png file").store({service: "s3"})
         assert.instanceOf(result, tinify.ResultMeta)
@@ -120,6 +198,16 @@ describe("Source", function() {
     })
 
     describe("toBuffer", function() {
+      beforeEach(function() {
+        nock("https://api.tinify.com")
+          .post("/shrink")
+          .reply(201, {}, {location: "https://api.tinify.com/some/location"})
+
+        nock("https://api.tinify.com")
+          .get("/some/location")
+          .reply(200, "compressed file")
+      })
+
       it("should return image data", function() {
         var data = tinify.Source.fromBuffer("png file").toBuffer()
         return data.then(function(data) {
@@ -129,6 +217,16 @@ describe("Source", function() {
     })
 
     describe("toFile", function() {
+      beforeEach(function() {
+        nock("https://api.tinify.com")
+          .post("/shrink")
+          .reply(201, {}, {location: "https://api.tinify.com/some/location"})
+
+        nock("https://api.tinify.com")
+          .get("/some/location")
+          .reply(200, "compressed file")
+      })
+
       it("should store image data", function() {
         var file = tmp.fileSync()
         var promise = tinify.Source.fromBuffer("png file").toFile(file.name)

@@ -13,7 +13,7 @@ describe("tinify", function() {
 
   describe("key", function() {
     beforeEach(function() {
-      var request = nock("https://api.tinify.com")
+      nock("https://api.tinify.com")
         .get("/")
         .basicAuth({
           user: "api",
@@ -32,7 +32,7 @@ describe("tinify", function() {
 
   describe("appIdentifier", function() {
     beforeEach(function() {
-      var request = nock("https://api.tinify.com", {
+      nock("https://api.tinify.com", {
         reqheaders: {"user-agent": tinify.Client.prototype.USER_AGENT + " MyApp/2.0"}
       }).get("/")
         .reply(200)
@@ -69,7 +69,7 @@ describe("tinify", function() {
       beforeEach(function() {
         tinify.key = "valid"
 
-        var request = nock("https://api.tinify.com")
+        nock("https://api.tinify.com")
           .post("/shrink")
           .reply(400, '{"error":"InputMissing","message":"No input"}')
 
@@ -81,7 +81,7 @@ describe("tinify", function() {
         })
       })
 
-      it("should not pass error to callback", function(done) {
+      it("should pass null to callback", function(done) {
         tinify.validate(function(err) {
           assert.isNull(err)
           done()
@@ -108,7 +108,7 @@ describe("tinify", function() {
       beforeEach(function() {
         tinify.key = "invalid"
 
-        var request = nock("https://api.tinify.com")
+        nock("https://api.tinify.com")
           .post("/shrink")
           .reply(401, '{"error":"Unauthorized","message":"Credentials are invalid"}')
       })
@@ -132,14 +132,22 @@ describe("tinify", function() {
     beforeEach(function() {
       tinify.key = "valid"
 
-      var request = nock("https://api.tinify.com")
+      nock("https://api.tinify.com")
         .post("/shrink")
         .reply(201, {}, { Location: "https://api.tinify.com/some/location" })
+
+      nock("https://api.tinify.com")
+        .get("/some/location")
+        .reply(200, "compressed file")
     })
 
     it("should return source", function() {
       var source = tinify.fromBuffer("png file")
       assert.instanceOf(source, tinify.Source)
+
+      /* We must return buffer in order to let mocha evaluate the promise and
+         make sure we wait for this request to complete. */
+      return source.toBuffer()
     })
   })
 
@@ -147,14 +155,45 @@ describe("tinify", function() {
     beforeEach(function() {
       tinify.key = "valid"
 
-      var request = nock("https://api.tinify.com")
+      nock("https://api.tinify.com")
         .post("/shrink")
         .reply(201, {}, { Location: "https://api.tinify.com/some/location" })
+
+      nock("https://api.tinify.com")
+        .get("/some/location")
+        .reply(200, "compressed file")
     })
 
     it("should return source", function() {
       var source = tinify.fromFile(dummyFile)
       assert.instanceOf(source, tinify.Source)
+
+      /* We must return buffer in order to let mocha evaluate the promise and
+         make sure we wait for this request to complete. */
+      return source.toBuffer()
+    })
+  })
+
+  describe("fromUrl", function() {
+    beforeEach(function() {
+      tinify.key = "valid"
+
+      nock("https://api.tinify.com")
+        .post("/shrink", '{"source":{"url":"http://example.com/test.jpg"}}')
+        .reply(201, {}, { Location: "https://api.tinify.com/some/location" })
+
+      nock("https://api.tinify.com")
+        .get("/some/location")
+        .reply(200, "compressed file")
+    })
+
+    it("should return source", function() {
+      var source = tinify.fromUrl("http://example.com/test.jpg")
+      assert.instanceOf(source, tinify.Source)
+
+      /* We must return buffer in order to let mocha evaluate the promise and
+         make sure we wait for this request to complete. */
+      return source.toBuffer()
     })
   })
 })

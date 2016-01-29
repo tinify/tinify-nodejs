@@ -20,9 +20,18 @@ describe("client integration", function() {
     optimized = tinify.fromFile(unoptimizedPath)
   })
 
-  it("should compress", function() {
+  it("should compress from file", function() {
     var file = tmp.fileSync()
     return optimized.toFile(file.name).then(function() {
+      assert.isAbove(fs.statSync(file.name).size, 0)
+      assert.isBelow(fs.statSync(file.name).size, 1500)
+    })
+  })
+
+  it("should compress from url", function() {
+    var source = tinify.fromUrl("https://raw.githubusercontent.com/tinify/tinify-nodejs/master/test/examples/voormedia.png")
+    var file = tmp.fileSync()
+    return source.toFile(file.name).then(function() {
       assert.isAbove(fs.statSync(file.name).size, 0)
       assert.isBelow(fs.statSync(file.name).size, 1500)
     })
