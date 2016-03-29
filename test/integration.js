@@ -43,7 +43,7 @@ describe("client integration", function() {
     var file = tmp.fileSync()
     return optimized.resize({ method: "fit", width: 50, height: 20 }).toFile(file.name).then(function() {
       assert.isAbove(fs.statSync(file.name).size, 0)
-      assert.isBelow(fs.statSync(file.name).size, 800)
+      assert.isBelow(fs.statSync(file.name).size, 1000)
     })
   })
 })
