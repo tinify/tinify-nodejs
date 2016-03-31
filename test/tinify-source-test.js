@@ -149,6 +149,48 @@ describe("Source", function() {
       })
     })
 
+    describe("preserve", function() {
+      beforeEach(function() {
+        nock("https://api.tinify.com")
+          .post("/shrink")
+          .reply(201, {}, {location: "https://api.tinify.com/some/location"})
+
+        nock("https://api.tinify.com")
+          .get("/some/location", '{"preserve":["copyright","location"]}')
+          .reply(200, "copyrighted file")
+      })
+
+      it("should return source", function() {
+        var source = tinify.Source.fromBuffer("png file").preserve("copyright", "location")
+        assert.instanceOf(source, tinify.Source)
+      })
+
+      it("should return source with data", function() {
+        var data = tinify.Source.fromBuffer("png file").preserve("copyright", "location").toBuffer()
+        return data.then(function(data) {
+          assert.equal("copyrighted file", data)
+        })
+      })
+
+      it("should return source with data for array", function() {
+        var data = tinify.Source.fromBuffer("png file").preserve(["copyright", "location"]).toBuffer()
+        return data.then(function(data) {
+          assert.equal("copyrighted file", data)
+        })
+      })
+
+      it("should include other options if set", function() {
+        nock("https://api.tinify.com")
+          .get("/some/location", '{"preserve":["copyright","location"],"resize":{"width":400}}')
+          .reply(200, "copyrighted resized file")
+
+        var data = tinify.Source.fromBuffer("png file").resize({width: 400}).preserve("copyright", "location").toBuffer()
+        return data.then(function(data) {
+          assert.equal("copyrighted resized file", data)
+        })
+      })
+    })
+
     describe("resize", function() {
       beforeEach(function() {
         nock("https://api.tinify.com")
@@ -193,6 +235,17 @@ describe("Source", function() {
         var location = tinify.Source.fromBuffer("png file").store({service: "s3"}).location()
         return location.then(function(location) {
           assert.equal("https://bucket.s3.amazonaws.com/example", location)
+        })
+      })
+
+      it("should include other options if set", function() {
+        nock("https://api.tinify.com")
+          .post("/some/location", '{"store":{"service":"s3"},"resize":{"width":400}}')
+          .reply(200, {}, {location: "https://bucket.s3.amazonaws.com/resized"})
+
+        var location = tinify.Source.fromBuffer("png file").resize({width: 400}).store({service: "s3"}).location()
+        return location.then(function(location) {
+          assert.equal("https://bucket.s3.amazonaws.com/resized", location)
         })
       })
     })
