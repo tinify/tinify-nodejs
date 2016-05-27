@@ -71,7 +71,31 @@ describe("tinify", function() {
 
         nock("https://api.tinify.com")
           .post("/shrink")
-          .reply(400, '{"error":"InputMissing","message":"No input"}')
+          .reply(400, '{"error":"Input missing","message":"No input"}')
+
+      })
+
+      it("should return null promise", function() {
+        return tinify.validate().then(function(value) {
+          assert.isNull(value)
+        })
+      })
+
+      it("should pass null to callback", function(done) {
+        tinify.validate(function(err) {
+          assert.isNull(err)
+          done()
+        })
+      })
+    })
+
+    describe("with limited key", function() {
+      beforeEach(function() {
+        tinify.key = "valid"
+
+        nock("https://api.tinify.com")
+          .post("/shrink")
+          .reply(429, '{"error":"Too many requests","message":"Your monthly limit has been exceeded"}')
 
       })
 
