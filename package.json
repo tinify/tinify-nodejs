@@ -27,8 +27,9 @@
   },
   "main": "lib/tinify.js",
   "dependencies": {
-    "bluebird": "^2.9.34",
-    "detect-engine": "^1.0.2"
+    "es6-promise": "^4.0",
+    "es6-promisify": "^5.0",
+    "promise-nodeify": "^0.1"
   },
   "devDependencies": {
     "mocha": "^2.2.5",

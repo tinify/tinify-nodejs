@@ -2,16 +2,17 @@
 
 var tinify = require("../lib/tinify")
 var assert = require("chai").assert
+var Promise = require("../lib/tinify/compat").Promise
 
 describe("Result", function() {
   describe("with meta and data", function() {
     beforeEach(function() {
-      this.subject = new tinify.Result(tinify.Promise.resolve({
+      this.subject = new tinify.Result(Promise.resolve({
         "image-width": "100",
         "image-height": "60",
         "content-length": "450",
         "content-type": "image/png",
-      }), tinify.Promise.resolve("image data"))
+      }), Promise.resolve("image data"))
     })
 
     describe("width", function() {

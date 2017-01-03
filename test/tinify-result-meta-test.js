@@ -2,11 +2,12 @@
 
 var tinify = require("../lib/tinify")
 var assert = require("chai").assert
+var Promise = require("../lib/tinify/compat").Promise
 
 describe("ResultMeta", function() {
   describe("with metadata", function() {
     beforeEach(function() {
-      this.subject = new tinify.ResultMeta(tinify.Promise.resolve({
+      this.subject = new tinify.ResultMeta(Promise.resolve({
         "image-width": "100",
         "image-height": "60",
         "location": "https://example.com/image.png",
