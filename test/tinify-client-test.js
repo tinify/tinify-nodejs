@@ -109,7 +109,11 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        assert.include(error.stack, "at Error.ConnectionError")
+        if (semver.gte(process.versions.node, "7.0.0")) {
+          assert.include(error.stack, "at ConnectionError")
+        } else {
+          assert.include(error.stack, "at Error.ConnectionError")
+        }
       })
     })
 
@@ -135,7 +139,11 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        assert.include(error.stack, "at Error.ServerError")
+        if (semver.gte(process.versions.node, "7.0.0")) {
+          assert.include(error.stack, "at ServerError")
+        } else {
+          assert.include(error.stack, "at Error.ServerError")
+        }
       })
     })
 
@@ -165,7 +173,11 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        assert.include(error.stack, "at Error.ServerError")
+        if (semver.gte(process.versions.node, "7.0.0")) {
+          assert.include(error.stack, "at ServerError")
+        } else {
+          assert.include(error.stack, "at Error.ServerError")
+        }
       })
     })
 
@@ -191,7 +203,11 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        assert.include(error.stack, "at Error.ClientError")
+        if (semver.gte(process.versions.node, "7.0.0")) {
+          assert.include(error.stack, "at ClientError")
+        } else {
+          assert.include(error.stack, "at Error.ClientError")
+        }
       })
     })
 
@@ -217,7 +233,11 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        assert.include(error.stack, "at Error.AccountError")
+        if (semver.gte(process.versions.node, "7.0.0")) {
+          assert.include(error.stack, "at AccountError")
+        } else {
+          assert.include(error.stack, "at Error.AccountError")
+        }
       })
     })
   })
