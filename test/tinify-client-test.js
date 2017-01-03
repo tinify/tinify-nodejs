@@ -3,6 +3,7 @@
 var tinify = require("../lib/tinify")
 var assert = require("chai").assert
 var nock = require("nock")
+var semver = require("semver")
 
 describe("Client", function() {
   beforeEach(function() {
@@ -156,7 +157,11 @@ describe("Client", function() {
       })
 
       it("should pass error with message", function() {
-        assert.equal(error.message, "Error while parsing response: Unexpected token < (HTTP 543/ParseError)")
+        if (semver.gte(process.versions.node, "6.0.0")) {
+          assert.equal(error.message, "Error while parsing response: Unexpected token < in JSON at position 0 (HTTP 543/ParseError)")
+        } else {
+          assert.equal(error.message, "Error while parsing response: Unexpected token < (HTTP 543/ParseError)")
+        }
       })
 
       it("should pass error with stack", function() {
