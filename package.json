@@ -1,6 +1,6 @@
 {
   "name": "tinify",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Node.js client for the Tinify API. Tinify compresses your images intelligently. Read more at https://tinify.com.",
   "keywords": [
     "tinify",
