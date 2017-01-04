@@ -27,9 +27,10 @@
   },
   "main": "lib/tinify.js",
   "dependencies": {
-    "es6-promise": "^4.0",
-    "es6-promisify": "^5.0",
-    "promise-nodeify": "^0.1"
+    "es6-promise": ">= 4.0",
+    "es6-promisify": ">= 5.0",
+    "promise-nodeify": ">= 0.1",
+    "proxying-agent": ">= 2.1"
   },
   "devDependencies": {
     "mocha": "^2.2.5",

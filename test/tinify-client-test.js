@@ -82,6 +82,21 @@ describe("Client", function() {
           return this.subject.request("get", "/")
         })
       })
+
+      describe("with proxy", function() {
+        beforeEach(function() {
+          this.subject = new tinify.Client("key", null, "http://user:pass@localhost:8080")
+        })
+
+        it("should issue request with proxy authorization", function() {
+          /* TODO: Nock does not support mocking agents? We're not actually
+             testing anything here. */
+          var request = nock("https://api.tinify.com").get("/")
+            .reply(200, {})
+
+          return this.subject.request("get", "/")
+        })
+      })
     })
 
     /* TODO: Test timeout/socket errors? */

@@ -11,12 +11,13 @@ var tmp = require("tmp")
 var fs = require("fs")
 
 describe("client integration", function() {
-  this.timeout(10000)
+  this.timeout(20000)
 
   var optimized
 
   before(function() {
     tinify.key = process.env.TINIFY_KEY
+    tinify.proxy = process.env.TINIFY_PROXY
 
     var unoptimizedPath = __dirname + "/examples/voormedia.png"
     optimized = tinify.fromFile(unoptimizedPath)
@@ -55,7 +56,7 @@ describe("client integration", function() {
 
   it("should resize", function() {
     var file = tmp.fileSync()
-    return optimized.resize({ method: "fit", width: 50, height: 20 }).toFile(file.name).then(function() {
+    return optimized.resize({method: "fit", width: 50, height: 20}).toFile(file.name).then(function() {
       var size = fs.statSync(file.name).size
       var contents = fs.readFileSync(file.name).toString("hex")
 

@@ -9,6 +9,7 @@ describe("tinify", function() {
 
   beforeEach(function() {
     tinify.key = null
+    tinify.proxy = null
   })
 
   describe("key", function() {
@@ -47,6 +48,22 @@ describe("tinify", function() {
     })
   })
 
+  describe("proxy", function() {
+    beforeEach(function() {
+      nock("https://api.tinify.com")
+        .get("/")
+        .reply(200)
+    })
+
+    it("should reset client with new proxy", function() {
+      tinify.key = "abcde"
+      tinify.proxy = "http://localhost"
+      tinify.client
+      tinify.proxy = "http://user:pass@localhost:8080"
+      return tinify.client.request("get", "/")
+    })
+  })
+
   describe("client", function() {
     describe("with key", function() {
       it("should return client", function() {
@@ -60,6 +77,16 @@ describe("tinify", function() {
         assert.throws(function() {
           tinify.client
         }, tinify.AccountError)
+      })
+    })
+
+    describe("with invalid proxy", function() {
+      it("should pass error", function() {
+        tinify.key = "abcde"
+        tinify.proxy = "http-bad-url"
+        assert.throws(function() {
+          tinify.client
+        }, tinify.ConnectionError)
       })
     })
   })
@@ -158,7 +185,7 @@ describe("tinify", function() {
 
       nock("https://api.tinify.com")
         .post("/shrink")
-        .reply(201, {}, { Location: "https://api.tinify.com/some/location" })
+        .reply(201, {}, {Location: "https://api.tinify.com/some/location"})
 
       nock("https://api.tinify.com")
         .get("/some/location")
@@ -181,7 +208,7 @@ describe("tinify", function() {
 
       nock("https://api.tinify.com")
         .post("/shrink")
-        .reply(201, {}, { Location: "https://api.tinify.com/some/location" })
+        .reply(201, {}, {Location: "https://api.tinify.com/some/location"})
 
       nock("https://api.tinify.com")
         .get("/some/location")
@@ -204,7 +231,7 @@ describe("tinify", function() {
 
       nock("https://api.tinify.com")
         .post("/shrink", '{"source":{"url":"http://example.com/test.jpg"}}')
-        .reply(201, {}, { Location: "https://api.tinify.com/some/location" })
+        .reply(201, {}, {Location: "https://api.tinify.com/some/location"})
 
       nock("https://api.tinify.com")
         .get("/some/location")
