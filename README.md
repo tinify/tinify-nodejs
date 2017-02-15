@@ -29,7 +29,7 @@ Or add this to your `package.json`:
 ## Usage
 
 ```javascript
-var tinify = require("tinify");
+const tinify = require("tinify");
 tinify.key = "YOUR_API_KEY";
 
 tinify.fromFile("unoptimized.png").toFile("optimized.png");

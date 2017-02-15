@@ -1,11 +1,11 @@
 "use strict"
 
-var tinify = require("../lib/tinify")
-var assert = require("chai").assert
-var nock = require("nock")
+const tinify = require("../lib/tinify")
+const assert = require("chai").assert
+const nock = require("nock")
 
 describe("tinify", function() {
-  var dummyFile = __dirname + "/examples/dummy.png"
+  let dummyFile = __dirname + "/examples/dummy.png"
 
   beforeEach(function() {
     tinify.key = null
@@ -193,7 +193,7 @@ describe("tinify", function() {
     })
 
     it("should return source", function() {
-      var source = tinify.fromBuffer("png file")
+      let source = tinify.fromBuffer("png file")
       assert.instanceOf(source, tinify.Source)
 
       /* We must return buffer in order to let mocha evaluate the promise and
@@ -216,7 +216,7 @@ describe("tinify", function() {
     })
 
     it("should return source", function() {
-      var source = tinify.fromFile(dummyFile)
+      let source = tinify.fromFile(dummyFile)
       assert.instanceOf(source, tinify.Source)
 
       /* We must return buffer in order to let mocha evaluate the promise and
@@ -239,7 +239,7 @@ describe("tinify", function() {
     })
 
     it("should return source", function() {
-      var source = tinify.fromUrl("http://example.com/test.jpg")
+      let source = tinify.fromUrl("http://example.com/test.jpg")
       assert.instanceOf(source, tinify.Source)
 
       /* We must return buffer in order to let mocha evaluate the promise and

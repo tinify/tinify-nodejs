@@ -1,7 +1,7 @@
 "use strict"
 
-var tinify = require("../lib/tinify")
-var assert = require("chai").assert
+const tinify = require("../lib/tinify")
+const assert = require("chai").assert
 
 describe("Result", function() {
   describe("with meta and data", function() {

@@ -1,9 +1,9 @@
 "use strict"
 
-var tinify = require("../lib/tinify")
-var assert = require("chai").assert
-var nock = require("nock")
-var semver = require("semver")
+const tinify = require("../lib/tinify")
+const assert = require("chai").assert
+const nock = require("nock")
+const semver = require("semver")
 
 describe("Client", function() {
   beforeEach(function() {
@@ -13,7 +13,7 @@ describe("Client", function() {
   describe("request", function() {
     describe("when valid", function() {
       it("should issue request", function() {
-        var request = nock("https://api.tinify.com")
+        let request = nock("https://api.tinify.com")
           .get("/")
           .reply(200, {})
 
@@ -21,7 +21,7 @@ describe("Client", function() {
       })
 
       it("should issue request without body when options are empty", function() {
-        var request = nock("https://api.tinify.com")
+        let request = nock("https://api.tinify.com")
           .get("/", "")
           .reply(200, {})
 
@@ -29,7 +29,7 @@ describe("Client", function() {
       })
 
       it("should issue request without content type when options are empty", function() {
-        var request = nock("https://api.tinify.com", {
+        let request = nock("https://api.tinify.com", {
           badheaders: ["content-type"]
         }).get("/", "")
           .reply(200, {})
@@ -38,7 +38,7 @@ describe("Client", function() {
       })
 
       it("should issue request with json body", function() {
-        var request = nock("https://api.tinify.com", {
+        let request = nock("https://api.tinify.com", {
           reqheaders: {
             "content-type": "application/json",
             "content-length": "17",
@@ -50,7 +50,7 @@ describe("Client", function() {
       })
 
       it("should issue request with user agent", function() {
-        var request = nock("https://api.tinify.com", {
+        let request = nock("https://api.tinify.com", {
           reqheaders: {"user-agent": tinify.Client.prototype.USER_AGENT}
         }).get("/")
           .reply(200, {})
@@ -59,7 +59,7 @@ describe("Client", function() {
       })
 
       it("should update compression count", function() {
-        var request = nock("https://api.tinify.com")
+        let request = nock("https://api.tinify.com")
           .get("/")
           .reply(200, {}, {"Compression-Count": "12"})
 
@@ -74,7 +74,7 @@ describe("Client", function() {
         })
 
         it("should issue request with user agent", function() {
-          var request = nock("https://api.tinify.com", {
+          let request = nock("https://api.tinify.com", {
             reqheaders: {"user-agent": tinify.Client.prototype.USER_AGENT + " TestApp/0.1"}
           }).get("/")
             .reply(200, {})
@@ -91,7 +91,7 @@ describe("Client", function() {
         it("should issue request with proxy authorization", function() {
           /* TODO: Nock does not support mocking agents? We're not actually
              testing anything here. */
-          var request = nock("https://api.tinify.com").get("/")
+          let request = nock("https://api.tinify.com").get("/")
             .reply(200, {})
 
           return this.subject.request("get", "/")
@@ -102,10 +102,10 @@ describe("Client", function() {
     /* TODO: Test timeout/socket errors? */
 
     describe("with unexpected error", function() {
-      var error
+      let error
 
       beforeEach(function() {
-        var request = nock("https://api.tinify.com")
+        let request = nock("https://api.tinify.com")
           .get("/")
           .delayConnection(2000)
           .replyWithError("some error")
@@ -127,16 +127,16 @@ describe("Client", function() {
         if (semver.gte(process.versions.node, "7.0.0")) {
           assert.include(error.stack, "at ConnectionError")
         } else {
-          assert.include(error.stack, "at Error.ConnectionError")
+          assert.include(error.stack, "at ConnectionError")
         }
       })
     })
 
     describe("with server error", function() {
-      var error
+      let error
 
       beforeEach(function() {
-        var request = nock("https://api.tinify.com")
+        let request = nock("https://api.tinify.com")
           .get("/")
           .reply(584, '{"error":"InternalServerError","message":"Oops!"}')
 
@@ -157,16 +157,16 @@ describe("Client", function() {
         if (semver.gte(process.versions.node, "7.0.0")) {
           assert.include(error.stack, "at ServerError")
         } else {
-          assert.include(error.stack, "at Error.ServerError")
+          assert.include(error.stack, "at ServerError")
         }
       })
     })
 
     describe("with bad server response", function() {
-      var error
+      let error
 
       beforeEach(function() {
-        var request = nock("https://api.tinify.com")
+        let request = nock("https://api.tinify.com")
           .get("/")
           .reply(543, '<!-- this is not json -->')
 
@@ -191,16 +191,16 @@ describe("Client", function() {
         if (semver.gte(process.versions.node, "7.0.0")) {
           assert.include(error.stack, "at ServerError")
         } else {
-          assert.include(error.stack, "at Error.ServerError")
+          assert.include(error.stack, "at ServerError")
         }
       })
     })
 
     describe("with client error", function() {
-      var error
+      let error
 
       beforeEach(function() {
-        var request = nock("https://api.tinify.com")
+        let request = nock("https://api.tinify.com")
           .get("/")
           .reply(492, '{"error":"BadRequest","message":"Oops!"}')
 
@@ -221,16 +221,16 @@ describe("Client", function() {
         if (semver.gte(process.versions.node, "7.0.0")) {
           assert.include(error.stack, "at ClientError")
         } else {
-          assert.include(error.stack, "at Error.ClientError")
+          assert.include(error.stack, "at ClientError")
         }
       })
     })
 
     describe("with bad credentials", function() {
-      var error
+      let error
 
       beforeEach(function() {
-        var request = nock("https://api.tinify.com")
+        let request = nock("https://api.tinify.com")
           .get("/")
           .reply(401, '{"error":"Unauthorized","message":"Oops!"}')
 
@@ -251,7 +251,7 @@ describe("Client", function() {
         if (semver.gte(process.versions.node, "7.0.0")) {
           assert.include(error.stack, "at AccountError")
         } else {
-          assert.include(error.stack, "at Error.AccountError")
+          assert.include(error.stack, "at AccountError")
         }
       })
     })

@@ -5,29 +5,29 @@ if (!process.env.TINIFY_KEY) {
   process.exit(1)
 }
 
-var tinify = require("../lib/tinify")
-var assert = require("chai").assert
-var tmp = require("tmp")
-var fs = require("fs")
+const tinify = require("../lib/tinify")
+const assert = require("chai").assert
+const tmp = require("tmp")
+const fs = require("fs")
 
 describe("client integration", function() {
   this.timeout(20000)
 
-  var optimized
+  let optimized
 
   before(function() {
     tinify.key = process.env.TINIFY_KEY
     tinify.proxy = process.env.TINIFY_PROXY
 
-    var unoptimizedPath = __dirname + "/examples/voormedia.png"
+    let unoptimizedPath = __dirname + "/examples/voormedia.png"
     optimized = tinify.fromFile(unoptimizedPath)
   })
 
   it("should compress from file", function() {
-    var file = tmp.fileSync()
+    let file = tmp.fileSync()
     return optimized.toFile(file.name).then(function() {
-      var size = fs.statSync(file.name).size
-      var contents = fs.readFileSync(file.name).toString("hex")
+      let size = fs.statSync(file.name).size
+      let contents = fs.readFileSync(file.name).toString("hex")
 
       assert.isAbove(size, 1000)
       assert.isBelow(size, 1500)
@@ -39,11 +39,11 @@ describe("client integration", function() {
   })
 
   it("should compress from url", function() {
-    var source = tinify.fromUrl("https://raw.githubusercontent.com/tinify/tinify-nodejs/master/test/examples/voormedia.png")
-    var file = tmp.fileSync()
+    let source = tinify.fromUrl("https://raw.githubusercontent.com/tinify/tinify-nodejs/master/test/examples/voormedia.png")
+    let file = tmp.fileSync()
     return source.toFile(file.name).then(function() {
-      var size = fs.statSync(file.name).size
-      var contents = fs.readFileSync(file.name).toString("hex")
+      let size = fs.statSync(file.name).size
+      let contents = fs.readFileSync(file.name).toString("hex")
 
       assert.isAbove(size, 1000)
       assert.isBelow(size, 1500)
@@ -55,10 +55,10 @@ describe("client integration", function() {
   })
 
   it("should resize", function() {
-    var file = tmp.fileSync()
+    let file = tmp.fileSync()
     return optimized.resize({method: "fit", width: 50, height: 20}).toFile(file.name).then(function() {
-      var size = fs.statSync(file.name).size
-      var contents = fs.readFileSync(file.name).toString("hex")
+      let size = fs.statSync(file.name).size
+      let contents = fs.readFileSync(file.name).toString("hex")
 
       assert.isAbove(size, 500)
       assert.isBelow(size, 1000)
@@ -70,10 +70,10 @@ describe("client integration", function() {
   })
 
   it("should preserve metadata", function() {
-    var file = tmp.fileSync()
+    let file = tmp.fileSync()
     return optimized.preserve("copyright", "creation").toFile(file.name).then(function() {
-      var size = fs.statSync(file.name).size
-      var contents = fs.readFileSync(file.name).toString("hex")
+      let size = fs.statSync(file.name).size
+      let contents = fs.readFileSync(file.name).toString("hex")
 
       assert.isAbove(size, 1000)
       assert.isBelow(size, 2000)

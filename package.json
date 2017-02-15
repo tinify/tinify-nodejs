@@ -23,7 +23,7 @@
     "integration": "node_modules/mocha/bin/mocha --reporter dot test/integration.js"
   },
   "engines": {
-    "node": ">= v0.10.0"
+    "node": ">= 4.0"
   },
   "main": "lib/tinify.js",
   "dependencies": {
