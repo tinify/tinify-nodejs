@@ -2,7 +2,6 @@
 
 var tinify = require("../lib/tinify")
 var assert = require("chai").assert
-var Promise = require("../lib/tinify/compat").Promise
 
 describe("ResultMeta", function() {
   describe("with metadata", function() {
