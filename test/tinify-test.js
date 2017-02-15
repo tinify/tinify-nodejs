@@ -12,6 +12,10 @@ describe("tinify", function() {
     tinify.proxy = null
   })
 
+  afterEach(function() {
+    nock.cleanAll()
+  })
+
   describe("key", function() {
     beforeEach(function() {
       nock("https://api.tinify.com")
@@ -34,7 +38,7 @@ describe("tinify", function() {
   describe("appIdentifier", function() {
     beforeEach(function() {
       nock("https://api.tinify.com", {
-        reqheaders: {"user-agent": tinify.Client.prototype.USER_AGENT + " MyApp/2.0"}
+        reqheaders: {"user-agent": tinify.Client.USER_AGENT + " MyApp/2.0"}
       }).get("/")
         .reply(200)
     })

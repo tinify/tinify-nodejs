@@ -7,7 +7,12 @@ const semver = require("semver")
 
 describe("Client", function() {
   beforeEach(function() {
+    tinify.Client.RETRY_DELAY = 10
     this.subject = new tinify.Client("key")
+  })
+
+  afterEach(function() {
+    nock.cleanAll()
   })
 
   describe("request", function() {
@@ -51,7 +56,7 @@ describe("Client", function() {
 
       it("should issue request with user agent", function() {
         let request = nock("https://api.tinify.com", {
-          reqheaders: {"user-agent": tinify.Client.prototype.USER_AGENT}
+          reqheaders: {"user-agent": tinify.Client.USER_AGENT}
         }).get("/")
           .reply(200, {})
 
@@ -75,7 +80,7 @@ describe("Client", function() {
 
         it("should issue request with user agent", function() {
           let request = nock("https://api.tinify.com", {
-            reqheaders: {"user-agent": tinify.Client.prototype.USER_AGENT + " TestApp/0.1"}
+            reqheaders: {"user-agent": tinify.Client.USER_AGENT + " TestApp/0.1"}
           }).get("/")
             .reply(200, {})
 
@@ -101,13 +106,31 @@ describe("Client", function() {
 
     /* TODO: Test timeout/socket errors? */
 
-    describe("with unexpected error", function() {
-      let error
+    describe("with unexpected error once", function() {
+      let response
 
       beforeEach(function() {
         let request = nock("https://api.tinify.com")
           .get("/")
-          .delayConnection(2000)
+          .replyWithError("some error")
+
+          .get("/")
+          .reply(200, {})
+
+        return this.subject.request("get", "/").then(res => response = res)
+      })
+
+      it("should return response", function() {
+        assert.equal(response.body, "{}")
+      })
+    })
+
+    describe("with unexpected error repeatedly", function() {
+      let error
+
+      beforeEach(function() {
+        let request = nock("https://api.tinify.com")
+          .get("/").times(2)
           .replyWithError("some error")
 
         return this.subject.request("get", "/").catch(function(err) {
@@ -128,12 +151,31 @@ describe("Client", function() {
       })
     })
 
-    describe("with server error", function() {
-      let error
+    describe("with server error once", function() {
+      let response
 
       beforeEach(function() {
         let request = nock("https://api.tinify.com")
           .get("/")
+          .reply(584, '{"error":"InternalServerError","message":"Oops!"}')
+
+          .get("/")
+          .reply(200, {})
+
+        return this.subject.request("get", "/").then(res => response = res)
+      })
+
+      it("should return response", function() {
+        assert.equal(response.body, "{}")
+      })
+    })
+
+    describe("with server error repeatedly", function() {
+      let error
+
+      beforeEach(function() {
+        let request = nock("https://api.tinify.com")
+          .get("/").times(2)
           .reply(584, '{"error":"InternalServerError","message":"Oops!"}')
 
         return this.subject.request("get", "/").catch(function(err) {
@@ -154,12 +196,31 @@ describe("Client", function() {
       })
     })
 
-    describe("with bad server response", function() {
-      let error
+    describe("with bad server response once", function() {
+      let response
 
       beforeEach(function() {
         let request = nock("https://api.tinify.com")
           .get("/")
+          .reply(543, '<!-- this is not json -->')
+
+          .get("/")
+          .reply(200, {})
+
+        return this.subject.request("get", "/").then(res => response = res)
+      })
+
+      it("should return response", function() {
+        assert.equal(response.body, "{}")
+      })
+    })
+
+    describe("with bad server response repeatedly", function() {
+      let error
+
+      beforeEach(function() {
+        let request = nock("https://api.tinify.com")
+          .get("/").times(2)
           .reply(543, '<!-- this is not json -->')
 
         return this.subject.request("get", "/").catch(function(err) {
