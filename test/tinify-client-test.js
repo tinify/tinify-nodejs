@@ -124,11 +124,7 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        if (semver.gte(process.versions.node, "7.0.0")) {
-          assert.include(error.stack, "at ConnectionError")
-        } else {
-          assert.include(error.stack, "at ConnectionError")
-        }
+        assert.include(error.stack, "at ConnectionError")
       })
     })
 
@@ -154,11 +150,7 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        if (semver.gte(process.versions.node, "7.0.0")) {
-          assert.include(error.stack, "at ServerError")
-        } else {
-          assert.include(error.stack, "at ServerError")
-        }
+        assert.include(error.stack, "at ServerError")
       })
     })
 
@@ -188,11 +180,7 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        if (semver.gte(process.versions.node, "7.0.0")) {
-          assert.include(error.stack, "at ServerError")
-        } else {
-          assert.include(error.stack, "at ServerError")
-        }
+        assert.include(error.stack, "at ServerError")
       })
     })
 
@@ -218,11 +206,7 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        if (semver.gte(process.versions.node, "7.0.0")) {
-          assert.include(error.stack, "at ClientError")
-        } else {
-          assert.include(error.stack, "at ClientError")
-        }
+        assert.include(error.stack, "at ClientError")
       })
     })
 
@@ -248,11 +232,7 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        if (semver.gte(process.versions.node, "7.0.0")) {
-          assert.include(error.stack, "at AccountError")
-        } else {
-          assert.include(error.stack, "at AccountError")
-        }
+        assert.include(error.stack, "at AccountError")
       })
     })
   })
