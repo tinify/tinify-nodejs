@@ -200,7 +200,7 @@ describe("tinify", function() {
       const source = tinify.fromBuffer("png file")
       assert.instanceOf(source, tinify.Source)
 
-      /* We must return buffer in order to const mocha evaluate the promise and
+      /* We must return buffer in order to let mocha evaluate the promise and
          make sure we wait for this request to complete. */
       return source.toBuffer()
     })
@@ -223,7 +223,7 @@ describe("tinify", function() {
       const source = tinify.fromFile(dummyFile)
       assert.instanceOf(source, tinify.Source)
 
-      /* We must return buffer in order to const mocha evaluate the promise and
+      /* We must return buffer in order to let mocha evaluate the promise and
          make sure we wait for this request to complete. */
       return source.toBuffer()
     })
@@ -246,7 +246,7 @@ describe("tinify", function() {
       const source = tinify.fromUrl("http://example.com/test.jpg")
       assert.instanceOf(source, tinify.Source)
 
-      /* We must return buffer in order to const mocha evaluate the promise and
+      /* We must return buffer in order to let mocha evaluate the promise and
          make sure we wait for this request to complete. */
       return source.toBuffer()
     })
