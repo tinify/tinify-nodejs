@@ -18,7 +18,7 @@ describe("Client", function() {
   describe("request", function() {
     describe("when valid", function() {
       it("should issue request", function() {
-        let request = nock("https://api.tinify.com")
+        const request = nock("https://api.tinify.com")
           .get("/")
           .reply(200, {})
 
@@ -26,7 +26,7 @@ describe("Client", function() {
       })
 
       it("should issue request without body when options are empty", function() {
-        let request = nock("https://api.tinify.com")
+        const request = nock("https://api.tinify.com")
           .get("/", "")
           .reply(200, {})
 
@@ -34,7 +34,7 @@ describe("Client", function() {
       })
 
       it("should issue request without content type when options are empty", function() {
-        let request = nock("https://api.tinify.com", {
+        const request = nock("https://api.tinify.com", {
           badheaders: ["content-type"]
         }).get("/", "")
           .reply(200, {})
@@ -43,7 +43,7 @@ describe("Client", function() {
       })
 
       it("should issue request with json body", function() {
-        let request = nock("https://api.tinify.com", {
+        const request = nock("https://api.tinify.com", {
           reqheaders: {
             "content-type": "application/json",
             "content-length": "17",
@@ -55,7 +55,7 @@ describe("Client", function() {
       })
 
       it("should issue request with user agent", function() {
-        let request = nock("https://api.tinify.com", {
+        const request = nock("https://api.tinify.com", {
           reqheaders: {"user-agent": tinify.Client.USER_AGENT}
         }).get("/")
           .reply(200, {})
@@ -64,7 +64,7 @@ describe("Client", function() {
       })
 
       it("should update compression count", function() {
-        let request = nock("https://api.tinify.com")
+        const request = nock("https://api.tinify.com")
           .get("/")
           .reply(200, {}, {"Compression-Count": "12"})
 
@@ -79,7 +79,7 @@ describe("Client", function() {
         })
 
         it("should issue request with user agent", function() {
-          let request = nock("https://api.tinify.com", {
+          const request = nock("https://api.tinify.com", {
             reqheaders: {"user-agent": tinify.Client.USER_AGENT + " TestApp/0.1"}
           }).get("/")
             .reply(200, {})
@@ -96,7 +96,7 @@ describe("Client", function() {
         it("should issue request with proxy authorization", function() {
           /* TODO: Nock does not support mocking agents? We're not actually
              testing anything here. */
-          let request = nock("https://api.tinify.com").get("/")
+          const request = nock("https://api.tinify.com").get("/")
             .reply(200, {})
 
           return this.subject.request("get", "/")
@@ -110,7 +110,7 @@ describe("Client", function() {
       let response
 
       beforeEach(function() {
-        let request = nock("https://api.tinify.com")
+        const request = nock("https://api.tinify.com")
           .get("/")
           .replyWithError("some error")
 
@@ -129,7 +129,7 @@ describe("Client", function() {
       let error
 
       beforeEach(function() {
-        let request = nock("https://api.tinify.com")
+        const request = nock("https://api.tinify.com")
           .get("/").times(2)
           .replyWithError("some error")
 
@@ -155,7 +155,7 @@ describe("Client", function() {
       let response
 
       beforeEach(function() {
-        let request = nock("https://api.tinify.com")
+        const request = nock("https://api.tinify.com")
           .get("/")
           .reply(584, '{"error":"InternalServerError","message":"Oops!"}')
 
@@ -174,7 +174,7 @@ describe("Client", function() {
       let error
 
       beforeEach(function() {
-        let request = nock("https://api.tinify.com")
+        const request = nock("https://api.tinify.com")
           .get("/").times(2)
           .reply(584, '{"error":"InternalServerError","message":"Oops!"}')
 
@@ -200,7 +200,7 @@ describe("Client", function() {
       let response
 
       beforeEach(function() {
-        let request = nock("https://api.tinify.com")
+        const request = nock("https://api.tinify.com")
           .get("/")
           .reply(543, '<!-- this is not json -->')
 
@@ -219,7 +219,7 @@ describe("Client", function() {
       let error
 
       beforeEach(function() {
-        let request = nock("https://api.tinify.com")
+        const request = nock("https://api.tinify.com")
           .get("/").times(2)
           .reply(543, '<!-- this is not json -->')
 
@@ -249,7 +249,7 @@ describe("Client", function() {
       let error
 
       beforeEach(function() {
-        let request = nock("https://api.tinify.com")
+        const request = nock("https://api.tinify.com")
           .get("/")
           .reply(492, '{"error":"BadRequest","message":"Oops!"}')
 
@@ -275,7 +275,7 @@ describe("Client", function() {
       let error
 
       beforeEach(function() {
-        let request = nock("https://api.tinify.com")
+        const request = nock("https://api.tinify.com")
           .get("/")
           .reply(401, '{"error":"Unauthorized","message":"Oops!"}')
 

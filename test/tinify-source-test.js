@@ -7,13 +7,13 @@ const tmp = require("tmp")
 const fs = require("fs")
 
 describe("Source", function() {
-  let dummyFile = __dirname + "/examples/dummy.png"
+  const dummyFile = __dirname + "/examples/dummy.png"
 
   describe("with invalid api key", function() {
     beforeEach(function() {
       tinify.key = "invalid"
 
-      let request = nock("https://api.tinify.com")
+      const request = nock("https://api.tinify.com")
         .post("/shrink")
         .reply(401, {error: "Unauthorized", message: "Credentials are invalid"})
     })
@@ -56,7 +56,7 @@ describe("Source", function() {
       })
 
       it("should return source", function() {
-        let source = tinify.Source.fromFile(dummyFile)
+        const source = tinify.Source.fromFile(dummyFile)
         assert.instanceOf(source, tinify.Source)
       })
 
@@ -65,7 +65,7 @@ describe("Source", function() {
           .get("/some/location")
           .reply(200, "compressed file")
 
-        let data = tinify.Source.fromFile(dummyFile).toBuffer()
+        const data = tinify.Source.fromFile(dummyFile).toBuffer()
         return data.then(function(data) {
           assert.equal("compressed file", data)
         })
@@ -80,7 +80,7 @@ describe("Source", function() {
       })
 
       it("should return source", function() {
-        let source = tinify.Source.fromBuffer("png file")
+        const source = tinify.Source.fromBuffer("png file")
         assert.instanceOf(source, tinify.Source)
       })
 
@@ -89,7 +89,7 @@ describe("Source", function() {
           .get("/some/location")
           .reply(200, "compressed file")
 
-        let data = tinify.Source.fromBuffer("png file").toBuffer()
+        const data = tinify.Source.fromBuffer("png file").toBuffer()
         return data.then(function(data) {
           assert.equal("compressed file", data)
         })
@@ -102,7 +102,7 @@ describe("Source", function() {
           .post("/shrink", '{"source":{"url":"http://example.com/test.jpg"}}')
           .reply(201, {}, {location: "https://api.tinify.com/some/location"})
 
-        let source = tinify.Source.fromUrl("http://example.com/test.jpg")
+        const source = tinify.Source.fromUrl("http://example.com/test.jpg")
         assert.instanceOf(source, tinify.Source)
       })
 
@@ -115,7 +115,7 @@ describe("Source", function() {
           .get("/some/location")
           .reply(200, "compressed file")
 
-        let data = tinify.Source.fromUrl("http://example.com/test.jpg").toBuffer()
+        const data = tinify.Source.fromUrl("http://example.com/test.jpg").toBuffer()
         return data.then(function(data) {
           assert.equal("compressed file", data)
         })
@@ -144,7 +144,7 @@ describe("Source", function() {
       })
 
       it("should return result", function() {
-        let result = tinify.Source.fromBuffer("png file").result()
+        const result = tinify.Source.fromBuffer("png file").result()
         assert.instanceOf(result, tinify.Result)
       })
     })
@@ -161,19 +161,19 @@ describe("Source", function() {
       })
 
       it("should return source", function() {
-        let source = tinify.Source.fromBuffer("png file").preserve("copyright", "location")
+        const source = tinify.Source.fromBuffer("png file").preserve("copyright", "location")
         assert.instanceOf(source, tinify.Source)
       })
 
       it("should return source with data", function() {
-        let data = tinify.Source.fromBuffer("png file").preserve("copyright", "location").toBuffer()
+        const data = tinify.Source.fromBuffer("png file").preserve("copyright", "location").toBuffer()
         return data.then(function(data) {
           assert.equal("copyrighted file", data)
         })
       })
 
       it("should return source with data for array", function() {
-        let data = tinify.Source.fromBuffer("png file").preserve(["copyright", "location"]).toBuffer()
+        const data = tinify.Source.fromBuffer("png file").preserve(["copyright", "location"]).toBuffer()
         return data.then(function(data) {
           assert.equal("copyrighted file", data)
         })
@@ -184,7 +184,7 @@ describe("Source", function() {
           .get("/some/location", '{"preserve":["copyright","location"],"resize":{"width":400}}')
           .reply(200, "copyrighted resized file")
 
-        let data = tinify.Source.fromBuffer("png file").resize({width: 400}).preserve("copyright", "location").toBuffer()
+        const data = tinify.Source.fromBuffer("png file").resize({width: 400}).preserve("copyright", "location").toBuffer()
         return data.then(function(data) {
           assert.equal("copyrighted resized file", data)
         })
@@ -203,12 +203,12 @@ describe("Source", function() {
       })
 
       it("should return source", function() {
-        let source = tinify.Source.fromBuffer("png file").resize({width: 400})
+        const source = tinify.Source.fromBuffer("png file").resize({width: 400})
         assert.instanceOf(source, tinify.Source)
       })
 
       it("should return source with data", function() {
-        let data = tinify.Source.fromBuffer("png file").resize({width: 400}).toBuffer()
+        const data = tinify.Source.fromBuffer("png file").resize({width: 400}).toBuffer()
         return data.then(function(data) {
           assert.equal("small file", data)
         })
@@ -227,12 +227,12 @@ describe("Source", function() {
       })
 
       it("should return result meta", function() {
-        let result = tinify.Source.fromBuffer("png file").store({service: "s3"})
+        const result = tinify.Source.fromBuffer("png file").store({service: "s3"})
         assert.instanceOf(result, tinify.ResultMeta)
       })
 
       it("should return result meta with location", function() {
-        let location = tinify.Source.fromBuffer("png file").store({service: "s3"}).location()
+        const location = tinify.Source.fromBuffer("png file").store({service: "s3"}).location()
         return location.then(function(location) {
           assert.equal("https://bucket.s3.amazonaws.com/example", location)
         })
@@ -243,7 +243,7 @@ describe("Source", function() {
           .post("/some/location", '{"store":{"service":"s3"},"resize":{"width":400}}')
           .reply(200, {}, {location: "https://bucket.s3.amazonaws.com/resized"})
 
-        let location = tinify.Source.fromBuffer("png file").resize({width: 400}).store({service: "s3"}).location()
+        const location = tinify.Source.fromBuffer("png file").resize({width: 400}).store({service: "s3"}).location()
         return location.then(function(location) {
           assert.equal("https://bucket.s3.amazonaws.com/resized", location)
         })
@@ -262,7 +262,7 @@ describe("Source", function() {
       })
 
       it("should return image data", function() {
-        let data = tinify.Source.fromBuffer("png file").toBuffer()
+        const data = tinify.Source.fromBuffer("png file").toBuffer()
         return data.then(function(data) {
           assert.equal("compressed file", data)
         })
@@ -281,8 +281,8 @@ describe("Source", function() {
       })
 
       it("should store image data", function() {
-        let file = tmp.fileSync()
-        let promise = tinify.Source.fromBuffer("png file").toFile(file.name)
+        const file = tmp.fileSync()
+        const promise = tinify.Source.fromBuffer("png file").toFile(file.name)
         return promise.then(function() {
           assert.equal("compressed file", fs.readFileSync(file.name))
         })
