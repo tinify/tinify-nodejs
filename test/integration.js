@@ -33,8 +33,8 @@ describe("client integration", function() {
       assert.isBelow(size, 1500)
 
       /* width == 137 */
-      assert.include(contents, new Buffer([0, 0, 0, 0x89]).toString("hex"))
-      assert.notInclude(contents, new Buffer("Copyright Voormedia").toString("hex"))
+      assert.include(contents, Buffer.from([0, 0, 0, 0x89]).toString("hex"))
+      assert.notInclude(contents, Buffer.from("Copyright Voormedia").toString("hex"))
     })
   })
 
@@ -49,8 +49,8 @@ describe("client integration", function() {
       assert.isBelow(size, 1500)
 
       /* width == 137 */
-      assert.include(contents, new Buffer([0, 0, 0, 0x89]).toString("hex"))
-      assert.notInclude(contents, new Buffer("Copyright Voormedia").toString("hex"))
+      assert.include(contents, Buffer.from([0, 0, 0, 0x89]).toString("hex"))
+      assert.notInclude(contents, Buffer.from("Copyright Voormedia").toString("hex"))
     })
   })
 
@@ -64,8 +64,8 @@ describe("client integration", function() {
       assert.isBelow(size, 1000)
 
       /* width == 50 */
-      assert.include(contents, new Buffer([0, 0, 0, 0x32]).toString("hex"))
-      assert.notInclude(contents, new Buffer("Copyright Voormedia").toString("hex"))
+      assert.include(contents, Buffer.from([0, 0, 0, 0x32]).toString("hex"))
+      assert.notInclude(contents, Buffer.from("Copyright Voormedia").toString("hex"))
     })
   })
 
@@ -79,8 +79,8 @@ describe("client integration", function() {
       assert.isBelow(size, 2000)
 
       /* width == 137 */
-      assert.include(contents, new Buffer([0, 0, 0, 0x89]).toString("hex"))
-      assert.include(contents, new Buffer("Copyright Voormedia").toString("hex"))
+      assert.include(contents, Buffer.from([0, 0, 0, 0x89]).toString("hex"))
+      assert.include(contents, Buffer.from("Copyright Voormedia").toString("hex"))
     })
   })
 })
