@@ -8,7 +8,7 @@ import {version} from "../../package.json"
 import tinify from "../tinify"
 
 const boundaries = /-----BEGIN CERTIFICATE-----[\s\S]+?-----END CERTIFICATE-----\n/g
-const data = fs.readFileSync(__dirname + "/../data/cacert.pem").toString()
+const data = fs.readFileSync(`${__dirname}/../data/cacert.pem`).toString()
 
 interface ClientOptions {
   ca: RegExpMatchArray
@@ -34,7 +34,7 @@ export default class Client {
   private static RETRY_DELAY = 500
 
   /** @internal */
-  private static USER_AGENT = "Tinify/" + version + " Node/" + process.versions.node + " (" + process.platform + ")"
+  private static USER_AGENT = `Tinify/${version} Node/${process.versions.node} (${process.platform})`
 
   /** @internal */
   private static CA_BUNDLE = data.match(boundaries)!
@@ -54,7 +54,7 @@ export default class Client {
     this.defaultOptions = {
       ca: klass.CA_BUNDLE,
       rejectUnauthorized: true,
-      auth: "api:" + key,
+      auth: `api:${key}`,
     }
 
     if (proxy) {
@@ -120,7 +120,7 @@ export default class Client {
                 details = JSON.parse(body.toString())
               } catch(err) {
                 details = {
-                  message: "Error while parsing response: " + err.message,
+                  message: `Error while parsing response: ${err.message}`,
                   error: "ParseError",
                 }
               }
@@ -139,7 +139,7 @@ export default class Client {
             return setTimeout(exec, klass.RETRY_DELAY)
           }
 
-          reject(new tinify.ConnectionError("Error while connecting: " + err.message))
+          reject(new tinify.ConnectionError(`Error while connecting: ${err.message}`))
         })
 
         request.end(body)

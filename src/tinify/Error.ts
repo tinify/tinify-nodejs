@@ -7,7 +7,7 @@ export class Error extends global.Error {
     global.Error.captureStackTrace(this, Error)
     if (status) {
       this.status = status
-      this.message = message + " (HTTP " + status + "/" + type + ")"
+      this.message = message + ` (HTTP ${status}/${type})`
     } else {
       this.message = message
     }
