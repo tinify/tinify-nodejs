@@ -1,6 +1,6 @@
 "use strict"
 
-const tinify = require("../lib/tinify")
+const tinify = require("../lib")
 const assert = require("chai").assert
 const nock = require("nock")
 const semver = require("semver")
@@ -147,7 +147,7 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        assert.include(error.stack, "at ConnectionError")
+        assert.include(error.stack, "at new ConnectionError")
       })
     })
 
@@ -192,7 +192,7 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        assert.include(error.stack, "at ServerError")
+        assert.include(error.stack, "at new ServerError")
       })
     })
 
@@ -241,7 +241,7 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        assert.include(error.stack, "at ServerError")
+        assert.include(error.stack, "at new ServerError")
       })
     })
 
@@ -267,7 +267,7 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        assert.include(error.stack, "at ClientError")
+        assert.include(error.stack, "at new ClientError")
       })
     })
 
@@ -293,7 +293,7 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        assert.include(error.stack, "at AccountError")
+        assert.include(error.stack, "at new AccountError")
       })
     })
   })

@@ -5,7 +5,7 @@ if (!process.env.TINIFY_KEY) {
   process.exit(1)
 }
 
-const tinify = require("../lib/tinify")
+const tinify = require("../lib")
 const assert = require("chai").assert
 const tmp = require("tmp")
 const fs = require("fs")

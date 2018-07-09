@@ -1,6 +1,6 @@
 "use strict"
 
-const tinify = require("../lib/tinify")
+const tinify = require("../lib")
 const assert = require("chai").assert
 const nock = require("nock")
 const tmp = require("tmp")

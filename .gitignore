@@ -1,1 +1,5 @@
 node_modules
+yarn.lock
+
+lib/**/*.js
+lib/**/*.d.ts

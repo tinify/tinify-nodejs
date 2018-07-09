@@ -1,6 +1,6 @@
 "use strict"
 
-const tinify = require("../lib/tinify")
+const tinify = require("../lib")
 const assert = require("chai").assert
 const nock = require("nock")
 
@@ -108,7 +108,7 @@ describe("tinify", function() {
 
       it("should return null promise", function() {
         return tinify.validate().then(function(value) {
-          assert.isNull(value)
+          assert.isUndefined(value)
         })
       })
 
@@ -132,7 +132,7 @@ describe("tinify", function() {
 
       it("should return null promise", function() {
         return tinify.validate().then(function(value) {
-          assert.isNull(value)
+          assert.isUndefined(value)
         })
       })
 

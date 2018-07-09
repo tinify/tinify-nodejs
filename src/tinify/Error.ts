@@ -1,7 +1,8 @@
-"use strict"
+export class Error extends global.Error {
+  status?: number
 
-class Error extends global.Error {
-  constructor(message, type, status) {
+  /** @internal */
+  constructor(message: string, type?: string, status?: number) {
     super()
     global.Error.captureStackTrace(this, Error)
     if (status) {
@@ -12,9 +13,12 @@ class Error extends global.Error {
     }
   }
 
-  static create(message, type, status) {
+  /** @internal */
+  static create(message: string, type: string, status?: number): Error {
     let klass
-    if (status == 401 || status == 429) {
+    if (!status) {
+      klass = Error
+    } else if (status === 401 || status === 429) {
       klass = AccountError
     } else if (status >= 400 && status <= 499) {
       klass = ClientError
@@ -32,15 +36,7 @@ class Error extends global.Error {
   }
 }
 
-class AccountError extends Error {}
-class ClientError extends Error {}
-class ServerError extends Error {}
-class ConnectionError extends Error {}
-
-module.exports = {
-  Error: Error,
-  AccountError: AccountError,
-  ClientError: ClientError,
-  ServerError: ServerError,
-  ConnectionError: ConnectionError,
-}
+export class AccountError extends Error {}
+export class ClientError extends Error {}
+export class ServerError extends Error {}
+export class ConnectionError extends Error {}
