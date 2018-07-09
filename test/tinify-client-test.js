@@ -147,7 +147,7 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        assert.include(error.stack, "at new ConnectionError")
+        assert.match(error.stack, /at( new)? ConnectionError/)
       })
     })
 
@@ -192,7 +192,7 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        assert.include(error.stack, "at new ServerError")
+        assert.match(error.stack, /at( new)? ServerError/)
       })
     })
 
@@ -241,7 +241,7 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        assert.include(error.stack, "at new ServerError")
+        assert.match(error.stack, /at( new)? ServerError/)
       })
     })
 
@@ -267,7 +267,7 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        assert.include(error.stack, "at new ClientError")
+        assert.match(error.stack, /at( new)? ClientError/)
       })
     })
 
@@ -293,7 +293,7 @@ describe("Client", function() {
       })
 
       it("should pass error with stack", function() {
-        assert.include(error.stack, "at new AccountError")
+        assert.match(error.stack, /at( new)? AccountError/)
       })
     })
   })

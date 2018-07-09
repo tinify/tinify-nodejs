@@ -2,7 +2,7 @@
   "include": ["./src/**/*"],
   "compilerOptions": {
     "outDir": "lib",
-    "target": "es2016",
+    "target": "es2015",
     "module": "commonjs",
     "lib": ["es2016"],
     "strict": true,
