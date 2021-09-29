@@ -1,17 +1,17 @@
-#!/bin/sh
+#!/usr/bin/env bash
 dir=lib/data
 
 cert=0
-curl https://curl.haxx.se/ca/cacert.pem | while read line; do
+curl --silent --fail https://curl.se/ca/cacert.pem  | while read -r line; do
   if [ "-----BEGIN CERTIFICATE-----" == "$line" ]; then
       cert=1
-      echo $line
+      echo "$line"
   elif [ "-----END CERTIFICATE-----" == "$line" ]; then
       cert=0
-      echo $line
+      echo "$line"
   else
       if [ $cert == 1 ]; then
-          echo $line
+          echo "$line"
       fi
   fi
-done > $dir/cacert.pem
+done > "$dir/cacert.pem"
