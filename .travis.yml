@@ -1,14 +1,11 @@
 language: node_js
-
 node_js:
 - 6.0
 - 6.9
-
 - 8.0
 - 8.9
-- 8.10
+- 8.1
 - 8.11
-
 - 10.0
 - 10.1
 - 10.2
@@ -16,31 +13,26 @@ node_js:
 - 10.4
 - 10.5
 - 10.6
-
 env:
   global:
     secure: cvcjiYODG4Wi9J7/I+54UfUp6Wbvpv83a3sQgeMCM35Wg/9DQrwx8JIp07FTyrqeIAENkDcfFeDOLbFhF94kciwfEsAkymFN2f+yOBtUg+ev61kXZPo06eepazcB6fdxdh06KeCTncgZhSqeMNjodLHcSxoe7cS56xVcNeGuWFRheiUeJq9a7w5uVYxUbzQO/9D0OKJC6qhf7/ZnStvU6Vhqk85NoMG8h10H+b0ecOX+yHvPiJU+/rjTDPHnqVxDFBdZIADiN9sLE6qXAd2RX9xI1h1XKWdslKoxZO2s0O3O19MmGq+hWCpBXeZj4HZQEnvxjbQ5hknZv+lqGCDUS0l7SKrGRoWdg6E+tSkQA7oHNubTbjeahflx1wY2XEH95NfQ/RLoAs8pzQ4mg6ZgwustLXFJv+sGTC4OQC8gsQdwLuHVLCu8+qsYnQGprAMdeu0Ct7rVc1upMuOJyt4jLsoryGugOXi/DUvr1JngFrSaHdc5vNiXn8E7vE+t/Ek8a8YA8FEkZSUmwJqgJhO5BBBQ2PdGrtS2JqResAcLysTVe+yvA61IJNaDDJ8ta7aXdqZPkTHCeIkIgemvWCsmyVerRKv1M6cJCcnOsxk0qnY6F323v6kh33DOsuxZOnaCWTJa9QOa2mQbud32GrIZiOd2DKLH7XP1mSqW88IQcVk=
-
 matrix:
   include:
   - node_js: '10.6'
     env: INTEGRATION_TESTS=true
-    script: "if [ \"$TRAVIS_PULL_REQUEST\" == \"false\" ]; then npm run integration; fi"
-
+    script: if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then npm run integration; fi
 notifications:
   email: false
   slack:
     secure: EdfFKXJfmrqtzs38Z1qar3OyiNXzi5y/MCj9LcI5V9Gnqk6sRpn8l/KH5Vfbdg7LplvLO4DO+QLy6FzEoowmGsD7WuGn7HicaBGy8MKrIHLmDm9lripDVPd3gG8lwrZENcAmIerRnE3P1GbrjuvbCr0JlEIMT8tqhCxEeRNkdb/rZ+b70/rJPy26fGZWXcHLkg1hjI93KT9DP6t8+K7pDDayzTlpssJQduRmurnfHOKPCn6KyCtYerXyqewQhPhz7MZY+d+m1xCAxM75QMR9jlbQqb1dHeH+zgiHJB/y8/BIiGF33HKa/AjJiwiwfqXv8EJ4brGbBl5S8gypQn9huQ3+WTQFya8l9TDYTzPiCtVQwAFUWnUIXWFrQkFc6utcmQhe4ghOBcTGR8e0JWWaC7WooCCIw/cYRyBsUcRWIydG0OnDv5TZgewo6ZkIwsYFcGXhQZxklzfhj0UhGf+yLE1K/Hm6hkAKY6fJdcOgvHKNKQcaT8qpDHbsitSmJWq0Q88EjmWjlhRxcJ0MGB9dYPsQ2pS/QZWbuzSbHGCxFpGySyiKr4OfjNjDxnVnvS8qXToUOwZTy3pWoW+pS2MN2v3MXXzBGzxtK/PYAPQxVIrmWaf46CG8b7c3bMyp4SP8qRAElPjVrmaPwu2OkUWYGJ3GyGOXLipzQH1ikl6eAO8=
-
 deploy:
-  # Make sure generated files are present.
-  skip_cleanup: true
   provider: npm
-  email: support@tinify.com
+  email: info@tinypng.com
   api_key:
-    secure: "Gwe10OInH0vfexU9lTBRFo6VQf3fHuoJVaFubwWOevuO/9SmAKHZmHLH82NjpG0bNyIg5f7Eldg2DEffUJywSyTl2wvDTgKETi/3CGRNrZS452FymUGOv24qYAOHaKOkEreiSIbsGpNJlTO/rykQqgqNEeJfZ4FteCsGkUbCRVANtZpb5vFzZqlakM0ZyyR3Iga0x+hZUpcfn2m57XlcrQFFFblIro9KiZJJNfA/QxhBZIwon6n+VRXp7LuURu/JiVeSHvGwWpjeC5PYE8ga6SxZMg2ydZgN9wv6dxXIjHrF5NnBl7se5Bc4ooWInvLiBdJlSsCEWskzWJIHoKguyDueVcS8oYh40mq7EKo+YAN4XBrS1sh9iteIExv5De5R3c83ywdY963DVJc9gutoW4fWGgOWfYQoaSL+VYxk6bBvWWhxU+/Z/ge8GNEzeaZTguuMaQk407BgNvhXsZxeadpxkqld6DKbD0U+xsqQtkz1odio39DzmXkvpW0MGdWDx0srRX8CUE3t2soX0MQ/HgnwSmUAPxOJoPwhRvKjm4kCgwXK6TBXbelEUa3cyTQvZrazdbNuA+UU7JPrbSnzyEqXv2m9Rm1nb2DF8IxKap30pfvknI722k4N+h5iAn4ZNCl6yGHYcPz8QnL10eWu9dsSs9qSVyzeiEVIP0x24YU="
+    secure: AAGB0t1AtItOvS5WccctcvmxDsKa/idOVSP2UgeYC91q3B8z1DYIvxkKZKeKzqYH9twCMkfoopxWzF6xVEm17S3HNPwJTVOB1+yQyFopm2s/zBjlT1YfvQZWi/hD5xCelDntFSdB5n4+ZNdx92KFVGIE/ZMBx8IsFL4PudgBrFpGf1s6V53nmY8Bem7vJnYC4M46yg2xqA2pwCPeKnm1NpH0FadV462sPbT+HT5fMZP2KDpzv1Tfm36YKhf7pR06hBUky9QEGZ0i8JxOOMf0W4A6v4sn/J8xnxtFB6zSeLIaWZKqG8+LFJ0Ux3xNdJ79VQy+m7WM8QzMVkb0yWMw1ETLwgTSbnPRyhwesZQ7/ArCfHSzYf/PXig/CF9hz/6e05O3UL82eSvaksrHeM/Cyne+SUVh4MtTPk4lwMxt2Fc0iU1bheSgpSpGB+xp+GTEXzi5bmT+/3dNRHgltGqiAytqVcP0OesyC/YWdEeaThTyrYpCtAYPl/rjvjpmZHuWf9w8mJ6QRSU8Zkvlwv35Lz937wy4ada/MZrpeW/WrWl9xx/rGBF6rgrsZZSJngMTX9oizsHihBsH9kHFZjyU/PCZJtJu+q6p8CSKMUy28xEJTxaoWORrSa1HGqRFUDPPK0wqdOgn5iIhvgKO/FICPDXwqyL5IpLAAnREND6Dtvk=
   on:
     tags: true
     repo: tinify/tinify-nodejs
-    node: '10.6'
     condition: "$INTEGRATION_TESTS != true"
+    node: '10.6'
+  skip_cleanup: true
