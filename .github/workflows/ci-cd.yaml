@@ -1,0 +1,44 @@
+name: CI_CD
+
+on: [push, pull_request]
+
+permissions: {}
+jobs:
+  Unit_tests:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [14, 16, 18.7]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install
+      - run: npm test
+
+  Integration_tests:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    needs: Unit_tests
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [14, 16, 18]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install Dependencies
+        run: npm install
+      - name: Run test suite
+        env:
+          TINIFY_KEY: ${{ secrets.TINIFY_KEY }}
+        run: npm run integration
