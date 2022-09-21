@@ -1,4 +1,4 @@
-name: CI_CD
+name: Node CI/CD
 
 on: [push, pull_request]
 
@@ -22,6 +22,7 @@ jobs:
       - run: npm test
 
   Integration_tests:
+    if: github.event_name == 'push'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     needs: Unit_tests
