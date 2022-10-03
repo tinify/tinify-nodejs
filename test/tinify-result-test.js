@@ -89,6 +89,21 @@ describe("Result", function() {
       })
     })
 
+    describe("extension", function() {
+      it("should return extension promise", function() {
+        return this.subject.extension().then(function(extension) {
+          assert.equal("png", extension)
+        })
+      })
+
+      it("should pass extension to callback", function(done) {
+        this.subject.extension(function(err, extension) {
+          assert.equal("png", extension)
+          done()
+        })
+      })
+    })
+
     describe("toBuffer", function() {
       it("should return image data promise", function() {
         return this.subject.toBuffer().then(function(data) {

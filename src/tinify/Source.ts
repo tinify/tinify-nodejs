@@ -84,4 +84,18 @@ export default class Source {
   toBuffer(callback?: Callback<Uint8Array>): Promise<Uint8Array> | void {
     return this.result().toBuffer(callback!)
   }
+
+  convert(options: object): Source {
+      return new tinify.Source(
+        this._url,
+        Object.assign({ convert: options }, this._commands)
+      )
+  }
+
+  transform(options: object): Source {
+      return new tinify.Source(
+        this._url,
+        Object.assign({ transform: options }, this._commands)
+       );
+  }
 }

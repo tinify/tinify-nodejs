@@ -83,4 +83,38 @@ describe("client integration", function() {
       assert.include(contents, Buffer.from("Copyright Voormedia").toString("hex"))
     })
   })
+
+  it("should transcode", function () {
+    const file = tmp.fileSync();
+
+    return optimized
+      .convert({type:["image/webp", "image/jpg"]})
+      .toFile(file.name)
+      .then(function () {
+        const contents = fs.readFileSync(file.name).toString("hex")
+        assert.include(contents, Buffer.from("WEBP").toString("hex"))
+      })
+  })
+
+  it("should return extension", function () {
+
+    return optimized
+      .convert({type:["image/webp"]})
+      .result()
+      .extension()
+      .then(function (data) {
+        assert.equal(data,"webp")
+      })
+  })
+
+  it("should return error for missing background", function () {
+
+    return optimized
+      .convert({type:["image/jpeg"]})
+      .toFile()
+      .catch(function (err) {
+        assert.equal(err.status,400)
+      })
+  })
+
 })

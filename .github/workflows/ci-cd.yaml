@@ -43,3 +43,35 @@ jobs:
         env:
           TINIFY_KEY: ${{ secrets.TINIFY_KEY }}
         run: npm run integration
+
+  Publish:
+    if: |
+      github.repository == 'tinify/tinify-nodejs' &&
+      startsWith(github.ref, 'refs/tags') &&
+      github.event_name == 'push'
+    timeout-minutes: 10
+    needs: [Unit_tests, Integration_tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up node
+        uses: actions/setup-node@v3
+        with:
+            node-version: "16.x"
+            registry-url: "https://registry.npmjs.org"
+      - name: Install dependencies
+        run: npm install
+      - name: Check if properly tagged
+        run: |
+            PACKAGE_VERSION="$(jq '.version' -r < package.json)";
+            CURRENT_TAG="${GITHUB_REF#refs/*/}";
+            if  [[ "${PACKAGE_VERSION}" != "${CURRENT_TAG}" ]]; then
+              >&2 echo "Tag mismatch"
+              >&2 echo "Version in package.json (${PACKAGE_VERSION}) does not match the current tag=${CURRENT_TAG}"
+              >&2 echo "Skipping deploy"
+              exit 1;
+            fi
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -57,4 +57,10 @@ export default class Result extends ResultMeta {
   contentType(callback?: Callback<string>): Promise<string | void> | void {
     return this.mediaType(callback!)
   }
+
+  extension(): Promise<string | void>
+  extension(callback: Callback<string>): void
+  extension(callback?: Callback<string>): Promise<string | void> | void {
+    return nodeify(this.meta().then(meta => (meta["content-type"] || " ").split("/")[1]), callback)
+  }
 }

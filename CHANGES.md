@@ -1,3 +1,7 @@
+## 1.7.0
+* Added convert and transform functions
+* Added function to get the file extension
+
 ## 1.6.0
 * Rewrite in TypeScript to provide automatically generated and tested types.
 * Drop support for NodeJS 4.0 and below (end of life).
