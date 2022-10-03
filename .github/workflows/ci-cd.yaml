@@ -71,6 +71,8 @@ jobs:
               >&2 echo "Skipping deploy"
               exit 1;
             fi
+      - name: TS compile
+        run: npx tsc
       - name: Publish to npm
         run: npm publish
         env:
