@@ -15,7 +15,7 @@ async function run() {
     await tinify.fromFile("/foo/bar").convert({ type: "image/webp" })
     await tinify.fromFile("/foo/bar").convert({ type: "image/png" })
     await tinify.fromFile("/foo/bar").convert({ type: "image/jpg" })
-    await tinify.fromFile("/foo/bar").convert({ type: "/" })
+    await tinify.fromFile("/foo/bar").convert({ type: "*/*" })
 
     await tinify.fromBuffer("foo")
       .resize({method: "fit", width: 150, height: 100})
