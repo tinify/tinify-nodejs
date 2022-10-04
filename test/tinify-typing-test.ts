@@ -11,6 +11,12 @@ async function run() {
     await tinify.fromBuffer(Buffer.from("foobar")).toBuffer()
     await tinify.fromUrl("https://tinypng.com/images/panda-happy.png").toBuffer()
 
+    await tinify.fromFile("/foo/bar").convert({ type: ["image/webp", "image/png", "image/jpg"] })
+    await tinify.fromFile("/foo/bar").convert({ type: "image/webp" })
+    await tinify.fromFile("/foo/bar").convert({ type: "image/png" })
+    await tinify.fromFile("/foo/bar").convert({ type: "image/jpg" })
+    await tinify.fromFile("/foo/bar").convert({ type: "/" })
+
     await tinify.fromBuffer("foo")
       .resize({method: "fit", width: 150, height: 100})
       .preserve("copyright", "creation")
