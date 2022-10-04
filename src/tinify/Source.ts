@@ -5,6 +5,17 @@ import Client from "./Client"
 import Result from "./Result"
 import ResultMeta from "./ResultMeta"
 
+export type SupportedImageTypes = "image/webp"
+  | "image/png"
+  | "image/jpg";
+
+export type WildcardOrSupportedImageTypes = SupportedImageTypes
+  | "*/*"; // The wildcard "*/*" returns the smallest of Tinify's supported image types, currently JPEG, PNG and WebP.
+
+export type ConvertOptions = {
+  type: WildcardOrSupportedImageTypes | SupportedImageTypes[];
+}
+
 export default class Source {
   /** @internal */
   private _url: Promise<string>
@@ -85,7 +96,7 @@ export default class Source {
     return this.result().toBuffer(callback!)
   }
 
-  convert(options: object): Source {
+  convert(options: ConvertOptions): Source {
       return new tinify.Source(
         this._url,
         Object.assign({ convert: options }, this._commands)
