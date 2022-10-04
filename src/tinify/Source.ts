@@ -10,7 +10,7 @@ export type SupportedImageTypes = "image/webp"
   | "image/jpg";
 
 export type WildcardOrSupportedImageTypes = SupportedImageTypes
-  | "/"; // The wildcard "/" returns the smallest of Tinify's supported image types, currently JPEG, PNG and WebP.
+  | "*/*"; // The wildcard "*/*" returns the smallest of Tinify's supported image types, currently JPEG, PNG and WebP.
 
 export type ConvertOptions = {
   type: WildcardOrSupportedImageTypes | SupportedImageTypes[];
