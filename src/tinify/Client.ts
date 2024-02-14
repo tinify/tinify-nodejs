@@ -8,7 +8,7 @@ import {version} from "../../package.json"
 import tinify from "../tinify"
 
 const boundaries = /-----BEGIN CERTIFICATE-----[\s\S]+?-----END CERTIFICATE-----\n/g
-const data = fs.readFileSync(`${__dirname}/../data/cacert.pem`).toString()
+const data = fs.readFileSync(path.join(__dirname, '..', 'data', 'cacert.pem')).toString();
 
 interface ClientOptions {
   ca: RegExpMatchArray
