@@ -233,12 +233,14 @@ describe("Client", function() {
       })
 
       it("should pass error with message", function() {
-        if (semver.gte(process.versions.node, "6.0.0")) {
+        if (semver.gte(process.versions.node, "20.0.0")) {
+          assert.equal(error.message, "Error while parsing response: Unexpected token '<', \"<!-- this \"... is not valid JSON (HTTP 543/ParseError)")
+        } else if (semver.gte(process.versions.node, "6.0.0")) {
           assert.equal(error.message, "Error while parsing response: Unexpected token < in JSON at position 0 (HTTP 543/ParseError)")
         } else {
           assert.equal(error.message, "Error while parsing response: Unexpected token < (HTTP 543/ParseError)")
         }
-      })
+      });
 
       it("should pass error with stack", function() {
         assert.match(error.stack, /at( new)? ServerError/)

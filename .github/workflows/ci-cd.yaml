@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [14, 16, 18]
+        node: [18, 20, 22, 23]
         os: [ubuntu-latest, macOS-latest, windows-latest]
     steps:
       - uses: actions/checkout@v3
@@ -29,7 +29,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [14, 16, 18]
+        node: [18, 20, 22, 23]
         os: [ubuntu-latest, macOS-latest, windows-latest]
     steps:
       - uses: actions/checkout@v3
@@ -57,7 +57,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v3
         with:
-            node-version: "16.x"
+            node-version: "22.x"
             registry-url: "https://registry.npmjs.org"
       - name: Install dependencies
         run: npm install
