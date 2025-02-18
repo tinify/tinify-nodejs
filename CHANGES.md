@@ -1,3 +1,6 @@
+## 1.7.2
+* Refine convert TypeScript types and add type tests
+
 ## 1.7.0
 * Added convert and transform functions
 * Added function to get the file extension
