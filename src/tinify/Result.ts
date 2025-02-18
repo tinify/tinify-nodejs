@@ -18,13 +18,13 @@ export default class Result extends ResultMeta {
   /** @internal */
   meta(): Promise<IncomingHttpHeaders> {
     /* Ignore errors on data, because they'll be propagated to meta too. */
-    return this._data.catch(ignore) && this._meta
+    return this._data.catch(ignore).then(() => this._meta);
   }
 
   /** @internal */
   data(): Promise<Uint8Array> {
     /* Ignore errors on meta, because they'll be propagated to data too. */
-    return this._meta.catch(ignore) && this._data
+    return this._meta.catch(ignore).then(() => this._data);
   }
 
   toFile(path: string): Promise<void>
@@ -47,20 +47,20 @@ export default class Result extends ResultMeta {
   }
 
   mediaType(): Promise<string | void>
-  mediaType(callback: Callback<string>): void
-  mediaType(callback?: Callback<string>): Promise<string | void> | void {
+  mediaType(callback: Callback<string | void>): void
+  mediaType(callback?: Callback<string | void>): Promise<string | void> | void {
     return nodeify(this.meta().then(meta => meta["content-type"] as string), callback)
   }
 
   contentType(): Promise<string | void>
-  contentType(callback: Callback<string>): void
-  contentType(callback?: Callback<string>): Promise<string | void> | void {
+  contentType(callback: Callback<string | void>): void
+  contentType(callback?: Callback<string | void>): Promise<string | void> | void {
     return this.mediaType(callback!)
   }
 
   extension(): Promise<string | void>
-  extension(callback: Callback<string>): void
-  extension(callback?: Callback<string>): Promise<string | void> | void {
+  extension(callback: Callback<string | void>): void
+  extension(callback?: Callback<string | void>): Promise<string | void> | void {
     return nodeify(this.meta().then(meta => (meta["content-type"] || " ").split("/")[1]), callback)
   }
 }

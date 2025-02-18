@@ -18,7 +18,9 @@
     "type": "git",
     "url": "https://github.com/tinify/tinify-nodejs.git"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "bugs:": "https://github.com/tinify/tinify-nodejs/issues",
   "scripts": {
     "test": "rm -rf lib/**.{js,ts} && tsc && tsc --noEmit test/tinify-typing-test.ts && mocha --reporter dot test/*-test.js",
@@ -30,17 +32,18 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "dependencies": {
+    "https-proxy-agent": "^7.0.6",
     "promise-nodeify": ">= 0.1",
     "proxying-agent": ">= 2.1"
   },
   "devDependencies": {
-    "@types/node": "~10.3.1",
+    "@types/node": "~22.3.1",
     "chai": "^2.3.0",
     "mocha": "^2.2.5",
     "nock": "^13.2.9",
     "semver": "*",
     "tmp": "^0.0.26",
     "tslint": "^5.10.0",
-    "typescript": "^2.9.2"
+    "typescript": "^5.7.3"
   }
 }

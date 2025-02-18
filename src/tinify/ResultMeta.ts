@@ -29,9 +29,9 @@ export default class ResultMeta {
     return nodeify(this.meta().then(meta => intify(meta["image-height"] as string)), callback)
   }
 
-  location(): Promise<string | void>
+  location(): Promise<string>
   location(callback: Callback<string>): void
-  location(callback?: Callback<string>): Promise<string | void> | void {
+  location(callback?: Callback<string>): Promise<string> | void {
     return nodeify(this.meta().then(meta => meta["location"] as string), callback)
   }
 }

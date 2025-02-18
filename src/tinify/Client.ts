@@ -2,7 +2,7 @@ import {IncomingMessage, IncomingHttpHeaders} from "http"
 import * as https from "https"
 import * as url from "url"
 import * as fs from "fs"
-import * as proxyAgent from "proxying-agent"
+import { HttpsProxyAgent } from 'https-proxy-agent';
 
 import {version} from "../../package.json"
 import tinify from "../tinify"
@@ -14,7 +14,8 @@ interface ClientOptions {
   ca: RegExpMatchArray
   rejectUnauthorized: boolean
   auth: string
-  agent?: proxyAgent.ProxyingAgent
+  agent?: HttpsProxyAgent<string>
+
 }
 
 /** @internal */
@@ -65,10 +66,9 @@ export default class Client {
       /* Note: although keepAlive is enabled, the proxy agent reconnects to the
          proxy server each time. This makes proxied requests slow. There
          seems to be no proxy tunneling agent that reuses TLS connections. */
-      this.defaultOptions.agent = proxyAgent.create({
-        proxy,
-        keepAlive: true,
-      }, klass.API_ENDPOINT)
+      this.defaultOptions.agent = new HttpsProxyAgent(proxy, {
+        "keepAlive": true
+      })
     }
   }
 
@@ -120,7 +120,7 @@ export default class Client {
                 details = JSON.parse(body.toString())
               } catch(err) {
                 details = {
-                  message: `Error while parsing response: ${err.message}`,
+                  message: `Error while parsing response: ${(err as any).message}`,
                   error: "ParseError",
                 }
               }
