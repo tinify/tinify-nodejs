@@ -1,6 +1,6 @@
 {
   "name": "tinify",
-  "version": "1.7.2",
+  "version": "1.8.0",
   "description": "Node.js client for the Tinify API. Tinify compresses your images intelligently. Read more at https://tinify.com.",
   "keywords": [
     "tinify",
@@ -33,11 +33,10 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "https-proxy-agent": "^7.0.6",
-    "promise-nodeify": ">= 0.1",
-    "proxying-agent": ">= 2.1"
+    "promise-nodeify": ">= 0.1"
   },
   "devDependencies": {
-    "@types/node": "~22.3.1",
+    "@types/node": "22.13.4",
     "chai": "^2.3.0",
     "mocha": "^2.2.5",
     "nock": "^13.2.9",
