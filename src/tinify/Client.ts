@@ -67,7 +67,7 @@ export default class Client {
          proxy server each time. This makes proxied requests slow. There
          seems to be no proxy tunneling agent that reuses TLS connections. */
       this.defaultOptions.agent = new HttpsProxyAgent(proxy, {
-        "keepAlive": true
+        "keepAlive": true,
       })
     }
   }
