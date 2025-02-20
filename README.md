@@ -1,4 +1,5 @@
-[<img src="https://travis-ci.org/tinify/tinify-nodejs.svg?branch=master" alt="Build Status">](https://travis-ci.org/tinify/tinify-nodejs)
+![NPM Version](https://img.shields.io/npm/v/tinify)
+
 
 # Tinify API client for Node.js
 
