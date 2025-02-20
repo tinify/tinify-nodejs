@@ -1,4 +1,5 @@
-![NPM Version](https://img.shields.io/npm/v/tinify)
+![NPM Version](https://img.shields.io/npm/v/tinify?link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Ftinify&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Ftinify)
+
 
 
 # Tinify API client for Node.js
