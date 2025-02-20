@@ -49,6 +49,13 @@ npm install
 TINIFY_KEY=$YOUR_API_KEY npm run integration
 ```
 
+
+#### To test with proxy:
+
+    $ docker run --rm -it -v ~/.mitmproxy:/home/mitmproxy/.mitmproxy -p 8080:8080 mitmproxy/mitmproxy mitmproxy  --listen-host 0.0.0.0
+
+    $ TINIFY_PROXY=http://172.17.0.3:8080 npm run integration
+
 ## License
 
 This software is licensed under the MIT License. [View the license](LICENSE).
