@@ -1,6 +1,7 @@
 ## 1.8.0
 * Refine convert TypeScript types and add type tests
 * Replace unmaintained proxying-agent with [https-proxy-agent](https://github.com/TooTallNate/proxy-agents/tree/main/packages/https-proxy-agent)
+* remove data/cacert.pem and inline the bundle in a JS file for maximum compatibility
 
 ## 1.7.0
 * Added convert and transform functions

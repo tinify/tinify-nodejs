@@ -6,16 +6,12 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 
 import {version} from "../../package.json"
 import tinify from "../tinify"
+import {CA_CERTS} from "./cacert"
 
-const boundaries = /-----BEGIN CERTIFICATE-----[\s\S]+?-----END CERTIFICATE-----\n/g
-const data = fs.readFileSync(`${__dirname}/../data/cacert.pem`).toString()
-
-interface ClientOptions {
-  ca: RegExpMatchArray
+interface ClientOptions extends https.RequestOptions {
   rejectUnauthorized: boolean
   auth: string
   agent?: HttpsProxyAgent<string>
-
 }
 
 /** @internal */
@@ -38,7 +34,7 @@ export default class Client {
   private static USER_AGENT = `Tinify/${version} Node/${process.versions.node} (${process.platform})`
 
   /** @internal */
-  private static CA_BUNDLE = data.match(boundaries)!
+  private static CA_BUNDLE = CA_CERTS
 
   /** @internal */
   userAgent: string
