@@ -7,7 +7,9 @@ import ResultMeta from "./ResultMeta"
 
 export type SupportedImageTypes = "image/webp"
   | "image/png"
-  | "image/jpg";
+  | "image/jpg"
+  | "image/jpeg"
+  | "image/avif";
 
 export type WildcardOrSupportedImageTypes = SupportedImageTypes
   | "*/*"; // The wildcard "*/*" returns the smallest of Tinify's supported image types, currently JPEG, PNG and WebP.
