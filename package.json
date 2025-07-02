@@ -1,6 +1,6 @@
 {
   "name": "tinify",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Node.js client for the Tinify API. Tinify compresses your images intelligently. Read more at https://tinify.com.",
   "keywords": [
     "tinify",
@@ -8,8 +8,17 @@
     "tinyjpg",
     "compress",
     "optimize",
+    "convert",
+    "resize",
     "images",
-    "api"
+    "thumbnail",
+    "crop",
+    "api",
+    "jpeg",
+    "jpg",
+    "png",
+    "webp",
+    "avif"
   ],
   "homepage": "https://tinify.com/developers",
   "license": "MIT",
@@ -27,7 +36,7 @@
     "integration": "rm -rf lib/**.{js,ts} && tsc && mocha --reporter dot test/integration.js"
   },
   "engines": {
-    "node": ">= 6.0"
+    "node": ">= 18.0"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
