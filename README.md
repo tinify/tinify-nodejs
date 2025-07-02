@@ -1,18 +1,27 @@
 [![NPM Version](https://img.shields.io/npm/v/tinify)](https://www.npmjs.com/package/tinify)
+![NPM License](https://img.shields.io/npm/l/tinify)
 
 
 
 # Tinify API client for Node.js
 
-Node.js client for the Tinify API, used for [TinyPNG](https://tinypng.com) and [TinyJPG](https://tinyjpg.com). Tinify compresses your images intelligently. Read more at [http://tinify.com](http://tinify.com).
+A lightweight Node.js client for the Tinify API, used for [tinypng API](https://tinypng.com) and [TinyJPG](https://tinyjpg.com). This library lets you intelligently **compress**, **resize**, **convert**, and **store** images (AVIF, WebP, JPEG, PNG) with minimal effort. Read more at [http://tinify.com](http://tinify.com).
 
-## Documentation
+## 🚀 Features
 
-[Go to the documentation for the Node.js client](https://tinypng.com/developers/reference/nodejs).
+- Compress and optimize images in AVIF, WebP, JPEG, and PNG formats
+- Resize with intelligent cropping
+- Convert between formats
+- Preserve metadata (copyright, GPS, creation time)
+- Upload directly to Amazon S3, Google Cloud Storage, or custom S3/Azure storage
 
-## Installation
+## 📖 Documentation
 
-Install the API client:
+[Go to the full documentation for the Node.js client](https://tinypng.com/developers/reference/nodejs).
+
+## 📦 Installation
+
+Install the API client via NPM:
 
 ```
 npm install tinify
@@ -34,7 +43,39 @@ Or add this to your `package.json`:
 const tinify = require("tinify");
 tinify.key = "YOUR_API_KEY";
 
+// Basic from file system
 tinify.fromFile("unoptimized.png").toFile("optimized.png");
+
+// From URL
+tinify.fromUrl("https://tinypng.com/images/panda-happy.png")
+  .toFile("optimized.png");
+
+// Resize
+tinify.fromFile("unoptimized.png").resize({
+  method: "cover",
+  width: 150,
+  height: 100
+}).toFile("thumbnail.jpg");
+
+// Convert format
+tinify.fromFile("photo.jpg").convert({ type: ["image/webp", "image/png"] })
+  .result().extension().then(ext => {
+    return tinify.fromFile("photo.jpg").toFile("photo." + ext);
+  });
+
+// Preserve metadata
+tinify.fromFile("original.jpg")
+  .preserve("copyright", "location", "creation")
+  .toFile("with-meta.jpg");
+
+// Store to Amazon S3
+tinify.fromFile("upload.jpg").store({
+  service: "s3",
+  aws_access_key_id: "KEY",
+  aws_secret_access_key: "SECRET",
+  region: "us-west-1",
+  path: "bucket-name/images/upload.jpg"
+});
 ```
 
 ## Running tests
