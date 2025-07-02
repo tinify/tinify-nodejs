@@ -1,3 +1,9 @@
+## 1.8.1
+
+* Set minimum node engine to v14 in package.json
+* Update examples in README
+* Test the code on node 24
+
 ## 1.8.0
 * Refine convert TypeScript types and add type tests
 * Replace unmaintained proxying-agent with [https-proxy-agent](https://github.com/TooTallNate/proxy-agents/tree/main/packages/https-proxy-agent)
