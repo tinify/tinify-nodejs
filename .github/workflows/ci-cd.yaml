@@ -10,8 +10,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [18, 20, 22, 24]
+        node: [14, 16, 18, 20, 22, 24]
         os: [ubuntu-latest, macOS-latest, windows-latest]
+        exclude:
+        - node: 14
+          os: macOS-latest
     steps:
       - uses: actions/checkout@v3
       - name: Setup node
@@ -29,12 +32,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [18, 20, 22, 24]
+        node: [14, 16, 18, 20, 22, 24]
         os: [ubuntu-latest, macOS-latest, windows-latest]
+        exclude:
+        - node: 14
+          os: macOS-latest
+
     steps:
       - uses: actions/checkout@v3
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
       - name: Install Dependencies
@@ -55,7 +62,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Set up node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
             node-version: "22.x"
             registry-url: "https://registry.npmjs.org"
