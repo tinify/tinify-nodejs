@@ -58,10 +58,12 @@ tinify.fromFile("unoptimized.png").resize({
 }).toFile("thumbnail.jpg");
 
 // Convert format
-tinify.fromFile("photo.jpg").convert({ type: ["image/webp", "image/png"] })
-  .result().extension().then(ext => {
-    return tinify.fromFile("photo.jpg").toFile("photo." + ext);
-  });
+const source = tinify.fromFile("panda-sticker.jpg");
+const converted = source.convert({type:["image/webp","image/png"]});
+const extension = converted.result().extension();
+extension.then(ext => {
+  converted.toFile("panda-sticker." + ext);
+})
 
 // Preserve metadata
 tinify.fromFile("original.jpg")
