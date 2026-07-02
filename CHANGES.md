@@ -1,3 +1,7 @@
+## 1.8.3
+* add JXL to supported image formats
+* add node 26 as test target
+
 ## 1.8.2
 * Removed the `GET` with body HTTP call that was being made when obtaining the results of a compression and transforming at the same time. Replaced with `POST` in order to prepare for deprecation of `GET` with body interface from API.
 * Updated dependencies.
