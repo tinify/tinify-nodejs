@@ -9,6 +9,7 @@ export type SupportedImageTypes = "image/webp"
   | "image/png"
   | "image/jpg"
   | "image/jpeg"
+  | "image/jxl"
   | "image/avif";
 
 export type WildcardOrSupportedImageTypes = SupportedImageTypes
