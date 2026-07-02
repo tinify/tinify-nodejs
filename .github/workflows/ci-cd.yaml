@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [14, 16, 18, 20, 22, 24, 25]
+        node: [14, 16, 18, 20, 22, 24, 25, 26]
         os: [ubuntu-latest, macOS-latest, windows-latest]
         exclude:
         - node: 14
@@ -32,7 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [14, 16, 18, 20, 22, 24, 25]
+        node: [14, 16, 18, 20, 22, 24, 25, 26]
         os: [ubuntu-latest, macOS-latest, windows-latest]
         exclude:
         - node: 14
