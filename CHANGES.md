@@ -1,3 +1,7 @@
+## Unreleased
+
+* Added `tinify.Format` constants for the media types `convert` accepts. `SupportedImageTypes` is now derived from them.
+
 ## 1.8.3
 * add JXL to supported image formats
 * add node 26 as test target

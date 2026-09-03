@@ -15,7 +15,16 @@ async function run() {
     await tinify.fromFile("/foo/bar").convert({ type: "image/webp" })
     await tinify.fromFile("/foo/bar").convert({ type: "image/png" })
     await tinify.fromFile("/foo/bar").convert({ type: "image/jpg" })
+    await tinify.fromFile("/foo/bar").convert({ type: "image/jxl" })
+    await tinify.fromFile("/foo/bar").convert({ type: "image/avif" })
     await tinify.fromFile("/foo/bar").convert({ type: "*/*" })
+
+    // The Format constants are accepted everywhere a literal is.
+    await tinify.fromFile("/foo/bar").convert({ type: tinify.Format.JXL })
+    await tinify.fromFile("/foo/bar").convert({ type: tinify.Format.ANY })
+    await tinify.fromFile("/foo/bar").convert({
+      type: [tinify.Format.JXL, tinify.Format.WEBP],
+    })
 
     await tinify.fromBuffer("foo")
       .resize({method: "fit", width: 150, height: 100})

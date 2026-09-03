@@ -5,11 +5,11 @@
 
 # Tinify API client for Node.js
 
-A lightweight Node.js client for the Tinify API, used for [tinypng API](https://tinypng.com) and [TinyJPG](https://tinyjpg.com). This library lets you intelligently **compress**, **resize**, **convert**, and **store** images (AVIF, WebP, JPEG, PNG) with minimal effort. Read more at [http://tinify.com](http://tinify.com).
+A lightweight Node.js client for the Tinify API, used for [tinypng API](https://tinypng.com) and [TinyJPG](https://tinyjpg.com). This library lets you intelligently **compress**, **resize**, **convert**, and **store** images (AVIF, JXL, WebP, JPEG, PNG) with minimal effort. Read more at [http://tinify.com](http://tinify.com).
 
 ## 🚀 Features
 
-- Compress and optimize images in AVIF, WebP, JPEG, and PNG formats
+- Compress and optimize images in AVIF, JXL, WebP, JPEG, and PNG formats
 - Resize with intelligent cropping
 - Convert between formats
 - Preserve metadata (copyright, GPS, creation time)

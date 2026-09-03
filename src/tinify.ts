@@ -1,6 +1,7 @@
 import {nodeify, Callback} from "./tinify/compat"
 
 import Client from "./tinify/Client"
+import Format from "./tinify/Format"
 import Result from "./tinify/Result"
 import ResultMeta from "./tinify/ResultMeta"
 import Source from "./tinify/Source"
@@ -19,6 +20,7 @@ class Tinify {
   compressionCount?: number
 
   Client!: typeof Client
+  Format!: typeof Format
   Source!: typeof Source
   Result!: typeof Result
   ResultMeta!: typeof ResultMeta
