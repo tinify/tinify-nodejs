@@ -2,18 +2,17 @@ import tinify from "../tinify"
 import {readFile, Callback} from "./compat"
 
 import Client from "./Client"
+import Format from "./Format"
 import Result from "./Result"
 import ResultMeta from "./ResultMeta"
 
-export type SupportedImageTypes = "image/webp"
-  | "image/png"
-  | "image/jpg"
-  | "image/jpeg"
-  | "image/jxl"
-  | "image/avif";
+type FormatValues = (typeof Format)[keyof typeof Format];
 
+export type SupportedImageTypes = Exclude<FormatValues, typeof Format.ANY>;
+
+// The wildcard "*/*" returns the smallest of Tinify's supported image types.
 export type WildcardOrSupportedImageTypes = SupportedImageTypes
-  | "*/*"; // The wildcard "*/*" returns the smallest of Tinify's supported image types, currently JPEG, PNG and WebP.
+  | typeof Format.ANY;
 
 export type ConvertOptions = {
   type: WildcardOrSupportedImageTypes | SupportedImageTypes[];
