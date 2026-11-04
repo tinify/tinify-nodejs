@@ -1,6 +1,7 @@
 import tinify from "./tinify"
 
 import Client from "./tinify/Client"
+import Format from "./tinify/Format"
 import Result from "./tinify/Result"
 import ResultMeta from "./tinify/ResultMeta"
 import Source from "./tinify/Source"
@@ -14,6 +15,7 @@ import {
 } from "./tinify/Error"
 
 tinify.Client = Client
+tinify.Format = Format
 tinify.ResultMeta = ResultMeta
 tinify.Result = Result
 tinify.Source = Source
