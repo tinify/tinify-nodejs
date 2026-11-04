@@ -15,7 +15,23 @@ async function run() {
     await tinify.fromFile("/foo/bar").convert({ type: "image/webp" })
     await tinify.fromFile("/foo/bar").convert({ type: "image/png" })
     await tinify.fromFile("/foo/bar").convert({ type: "image/jpg" })
+    await tinify.fromFile("/foo/bar").convert({ type: "image/jxl" })
+    await tinify.fromFile("/foo/bar").convert({ type: "image/avif" })
     await tinify.fromFile("/foo/bar").convert({ type: "*/*" })
+
+    // The Format constants are accepted everywhere a literal is.
+    await tinify.fromFile("/foo/bar").convert({ type: tinify.Format.JXL })
+    await tinify.fromFile("/foo/bar").convert({ type: tinify.Format.ANY })
+    await tinify.fromFile("/foo/bar").convert({
+      type: [tinify.Format.JXL, tinify.Format.WEBP],
+    })
+
+    // SupportedImageTypes is derived from Format; these assert the derived
+    // union is no wider than the literal list it replaced.
+    // @ts-expect-error an unknown media type is not assignable
+    await tinify.fromFile("/foo/bar").convert({ type: "image/bogus" })
+    // @ts-expect-error the "*/*" wildcard is not valid inside the array form
+    await tinify.fromFile("/foo/bar").convert({ type: ["*/*"] })
 
     await tinify.fromBuffer("foo")
       .resize({method: "fit", width: 150, height: 100})
