@@ -1,3 +1,7 @@
+## 2.0.0
+* **Breaking:** removed the bundled CA certificate chain. TLS connections now use Node.js's default trust store, so custom roots should be supplied via `NODE_EXTRA_CA_CERTS` or `--use-system-ca`.
+* Removed the `update-cacert.sh` script.
+
 ## 1.9.0
 * Added `tinify.Format` constants for the media types `convert` accepts. `SupportedImageTypes` is now derived from them.
 
