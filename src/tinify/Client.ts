@@ -6,7 +6,6 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 
 import {version} from "../../package.json"
 import tinify from "../tinify"
-import {CA_CERTS} from "./cacert"
 
 interface ClientOptions extends https.RequestOptions {
   rejectUnauthorized: boolean
@@ -34,9 +33,6 @@ export default class Client {
   private static USER_AGENT = `Tinify/${version} Node/${process.versions.node} (${process.platform})`
 
   /** @internal */
-  private static CA_BUNDLE = CA_CERTS
-
-  /** @internal */
   userAgent: string
 
   /** @internal */
@@ -49,7 +45,6 @@ export default class Client {
     this.userAgent = [klass.USER_AGENT, appIdentifier].filter(Boolean).join(" ")
 
     this.defaultOptions = {
-      ca: klass.CA_BUNDLE,
       rejectUnauthorized: true,
       auth: `api:${key}`,
     }
